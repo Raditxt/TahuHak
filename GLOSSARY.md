@@ -62,8 +62,12 @@ _Avoid_: status bersyarat
 ## Pengguna dan konten
 
 **Topik**:
-Kategori masalah sehari-hari, disusun dari data aduan publik dan divalidasi warga, yang menjadi pintu masuk terkurasi.
-_Avoid_: kategori, tema
+Satu situasi masalah sehari-hari dalam bahasa warga (mis. "Di-PHK, pesangon berapa?") yang menjadi pintu masuk terkurasi. Topik adalah unit yang dipilih saat menerjemahkan Pertanyaan Pengguna. Satu Topik bisa masuk lebih dari satu Kategori.
+_Avoid_: sub-situasi, kartu, tema
+
+**Kategori**:
+Kelompok Topik untuk navigasi, disusun dari data aduan publik dan divalidasi warga (mis. "Kerja: PHK, pesangon, THR & upah"). Hubungannya banyak-ke-banyak dengan Topik: contohnya Topik "Dimintai uang tidak resmi" (pungli) ada di Kategori #5 Polisi & korban kejahatan, #9 Layanan publik, dan #10 Aturan kota.
+_Avoid_: memakai "topik" untuk kelompok
 
 **Padanan Istilah**:
 Pasangan kurasi antara kata sehari-hari dan istilah hukum (mis. "dipecat" → "pemutusan hubungan kerja"), dipakai untuk menerjemahkan Pertanyaan Pengguna menjadi kata kunci pencarian.
