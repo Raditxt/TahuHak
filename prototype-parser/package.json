@@ -1,0 +1,16 @@
+{
+  "name": "prototype-parser",
+  "private": true,
+  "type": "module",
+  "description": "PROTOTYPE — dibuang. Menjawab issue #2.",
+  "scripts": {
+    "parse": "bun run parse.ts",
+    "cek": "bun run cek-bocor.ts",
+    "laporan": "bun run laporan.ts",
+    "ocr": "bash ocr.sh",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "pdfjs-dist": "^4.10.38"
+  }
+}

@@ -1,0 +1,340 @@
+{
+  "peraturan": {
+    "jenis": "Perda",
+    "nomor": "2",
+    "tahun": 1983,
+    "judul": "PAJAK P()TONO HE.WAN",
+    "asalTeks": "ocr"
+  },
+  "kualitas": {
+    "token": 1503,
+    "porsiLapisanOcr": 1,
+    "anehPer1000": 27.3,
+    "oovPer1000": 429.8,
+    "nilai": "perlu-ocr",
+    "contoh": [
+      "hewan×19",
+      "pemotongan×10",
+      "dahulu×5",
+      "potong×4",
+      "pajak×4",
+      "dipotong×4",
+      "·×3",
+      "hajat×3",
+      "kerbau×3",
+      "~×2",
+      "KOfAMADYA×2",
+      "memadai×2",
+      "keadaannya×2",
+      "hewannya×2",
+      "yangakan×2",
+      "darurat×2",
+      "terlebih×2",
+      "memotong×2",
+      "diperiksa×2",
+      "temyata×2",
+      "dikeluarkan×2",
+      "mengeluarkan×2",
+      "L.BIBABAN•×1",
+      "OAfRAH×1",
+      "pembangwlan×1"
+    ]
+  },
+  "pembersihan": {
+    "header": 0,
+    "nomorHalaman": 0,
+    "footerSalinan": 0,
+    "kataSambung": 0,
+    "berulang": 0
+  },
+  "pasal": [
+    {
+      "nomor": "1",
+      "ayat": [
+        {
+          "nomor": null,
+          "teks": "Dalam PeraturanDaerah ini yang dimaksud dengan:\na. Kepala Daerah ialah Walikotamadya Kepala Daerah Tingkat II Ujung Pandang ; . b. .pfuaS Petemakan ialah Dfuas Petemakan Kotamadya Daerah Tingkat II Ujung Pandang ; c, Hewan ialah Sap~ Kerbau, Kambing, Domba, dan Babi piaraan;\nd. Juru Periksa (Keurmeester) iaJah petugas tekhnik yang membantu Dokter Hewan Pemerintah untuk melakukati pemeriksaan/pngQjian hewan/daging ;\ne. Pemotoagan Hewan ialah membunuh hewan clansegala peketjaan yangmendahu- Jui pekerjaan me~bunuh itu, demildan juga laajutan pekerjaan yang diJakukan terhadap hewan yang dibunuh itu ;\nf. Pemotongan darwat iaJah pemotoJ13811 hewan karena :\n1. KeceJakaan sehingga keadaannya sangat me.oghawatirkan.\n2. Sakit sehingga dikhawatirkan akan mati\n3. Dianggap dapat membabayakan langsung k.eamanan orang atau barang.\ng. Pemotongan hajat ialah pemotoagan hewan untUk suatu niiuan tertentu yang si· fatnya tidak: untuk diperdagangkan ; h, Pemotongan usaba iaJah pemotongan bewan yang bertujuan untuk diperdagang- Jean; i, Surat izin ia.lah surat izin potong hewan ;\nj. Rumah Potong Hewa.n disingkat (RP.H.) ialah bangunan/tempat, bai.k yang dimiliki Pemerintah Daerah maupun pihak swasta yang telah mendapat izin dari Kepala Daerah, yang diguna.kan sebagai tempat pemotongan umum."
+        }
+      ],
+      "halaman": [
+        3
+      ],
+      "penjelasan": "Cukup jelas."
+    },
+    {
+      "nomor": "2",
+      "ayat": [
+        {
+          "nomor": null,
+          "teks": "Da.larn Kotamadya Daerah Tingkat II Ujung Pandang dipungut pajak atas pemotongan hewan dengan nama Pajak Potong Hewan."
+        }
+      ],
+      "halaman": [
+        3
+      ],
+      "penjelasan": "Cukup jelas."
+    },
+    {
+      "nomor": "3",
+      "ayat": [
+        {
+          "nomor": null,
+          "teks": "Obyek paja.k ialah pemotongan hewan Sapi, Kerbau, Kuda, Kambing, Domba dan Babi surta subyek/wajib paj.ak ialah mereka yang akan memotongkan hewannya di Rumah Potong Hewan m.aupun diluar Rumah Potong Hewan."
+        }
+      ],
+      "halaman": [
+        4
+      ],
+      "penjelasan": "Cukup jelas."
+    },
+    {
+      "nomor": "4",
+      "ayat": [
+        {
+          "nomor": "1",
+          "teks": "Setiap hewan yangakan dipotong di Rumab Potong Hewan harus_terlebih dahulu mendapat izin tertulis dari ~epala Daerah cq, Kepala Dlnas Petemakan."
+        },
+        {
+          "nomor": "2",
+          "teks": "Untuk pemonongan darurat. dapat dilaksanalcan terlebih dahulu sambil menyelesaikan surat izin yang dimaksud pada ayat (1) pasa1 ini."
+        },
+        {
+          "nomor": "3",
+          "teks": "Pemberian izin dimaksud ayat (1) pasal ini baru dapat dilaksanakan setelah terlebih dahulu melunasi paja.k potong."
+        },
+        {
+          "nomor": "4",
+          "teks": "Bentuk dan wama serta cara memperoleb swat izin ditetapkan dengan Surat Keputusan Kepala Daerah."
+        }
+      ],
+      "halaman": [
+        4
+      ],
+      "penjelasan": "ayat (1): Surat izin yang dimaksud dalam pasal ini ialah izin\nyang dikeluarkan oleh Kepala Daerah atau Pejabat\nyang diturtjuk secara khusus dalam suatu Surat Ke-\nputusan,\nPasal 5 s/d 7 Cukup jelas.\n'\nPasal 8 ayat (2) Pemusnahan daaging yang dirnaksudkan dalam pasal\nini ialah harus dibuatkan berita acara oleh Pejabat\natau ahli yangtelah ditunjuk dengan Surat Keputusana\nKepala Daerah."
+    },
+    {
+      "nomor": "5",
+      "ayat": [
+        {
+          "nomor": "1",
+          "teks": "Bagi pemotongan bajat yang berk.epentingan harus memperoleh surat keterangan d.ari Kepala Pemerintah setempat untuk seJa.qjutnya diperoleh surat izin sebagaiman.a yang disebutkan dalam Pasal 4 ayat (1)."
+        },
+        {
+          "nomor": "2",
+          "teks": "Bentuk surat keterangan dimaksud ditetapkandcngan Surat Keputusan Kepala Dae rah."
+        }
+      ],
+      "halaman": [
+        4
+      ]
+    },
+    {
+      "nomor": "6",
+      "ayat": [
+        {
+          "nomor": "1",
+          "teks": "Setiap orang yang akan memotong hewan harus rnemeriksakan hewannya terlebih dahuJu kepada Kepala Dinis Peternakan atau pejabat yang diturtjuknya . ."
+        },
+        {
+          "nomor": "2",
+          "teks": "Setelah hewan itu diperiksa dan temyata sehat, hewan tersebut dicap tanda boleh dipotong.·"
+        }
+      ],
+      "halaman": [
+        4
+      ]
+    },
+    {
+      "nomor": "7",
+      "ayat": [
+        {
+          "nomor": null,
+          "teks": "Setiap hewan yangakan dipotong di R.P.H. diberitahukan Jebih dahulu kepada Kepala RP.H."
+        }
+      ],
+      "halaman": [
+        5
+      ]
+    },
+    {
+      "nomor": "8",
+      "ayat": [
+        {
+          "nomor": "1",
+          "teks": "Surat Ltlo harus dikembalikan kepada Pemerintah . Daerah apabila daging dari hewan ynn dipotong, setelab diperiksa olch Jwu Pcriksa temyata tidak dapat dimakan atau berbahaya untuk dimakan. Dalam hal ini pajak potong hewan yang telah dibayar dapat diminta k.embali pada Pemerintah Daerah"
+        },
+        {
+          "nomor": "2",
+          "teks": "Daging yang dimaksud dalam ayat (1) pasal ini harus dimusnahkao sesuai petunjuk Dokter Hewan Pemerintah atau seorang Akhti dan sega.la biaya yang diperlukan ditanggung oleh pemiliknya. BAB JV LARANGAN"
+        }
+      ],
+      "halaman": [
+        5
+      ]
+    },
+    {
+      "nomor": "9",
+      "ayat": [
+        {
+          "nomor": "1",
+          "teks": "Dilarang memotong hewan tanpa memiliki terlebih dahulu swat izin."
+        },
+        {
+          "nomor": "2",
+          "teks": "Ketentuan dalarn ayat (1) pasal ini tida.k berlaku ternadap hewan yang lcarena kecelakaan atau karena keadaannya sedemikian rupa sehingga hewan itu terpaksa segera dipotong."
+        },
+        {
+          "nomor": "3",
+          "teks": "Dalam hal tersebut ayat (2) pasal ini harus dilruatkan dengan surat keterangan dari yang berwajib."
+        }
+      ],
+      "halaman": [
+        5
+      ],
+      "penjelasan": "OJkup Jelas."
+    },
+    {
+      "nomor": "10",
+      "ayat": [
+        {
+          "nomor": null,
+          "teks": "Dagingyang berasal dari pemotongan hajat dan pemotongan tanpa izin dilarang untuk diperjual belikan."
+        }
+      ],
+      "halaman": [
+        5
+      ],
+      "penjelasan": "OJkup Jelas."
+    },
+    {
+      "nomor": "11",
+      "ayat": [
+        {
+          "nomor": null,
+          "teks": "Izin/keterangan dimaksud pasal 2 Peraturan Daerah ini dilarang dipindah tangankan."
+        }
+      ],
+      "halaman": [
+        5
+      ],
+      "penjelasan": "OJkup Jelas."
+    },
+    {
+      "nomor": "12",
+      "ayat": [
+        {
+          "nomor": null,
+          "teks": "Jumlah pajak pemotongan untuk setiap ekor adalahsebagai berikut :"
+        },
+        {
+          "nomor": "1",
+          "teks": "Untuk pemotongan usaha :\na. Sapi, kerbau, kuda Rp, 2.soo.-\nb. Babi Rp. 3.000,-\nc. Kambing dan domba Rp, 200,-"
+        },
+        {
+          "nomor": "2",
+          "teks": "Untuk pemotongan hajat :\na. Sapi, kerbau, lruda ••••••••••••••••••.•••. Rp. 750,-\nb. Babi ..•....................... ! Rp. 1.000,- c, Kambing dan Domba , Rp. 100.-·"
+        },
+        {
+          "nomor": "3",
+          "teks": "Untuc pemotongan darurat:\na. Sapi, kerbau, kuda Rp. 7SO,:-\nb. Babi ...•...............•.............. Rp, 1.000..-\nc. Kambing dan Dornba P.p. lt'lJ;-"
+        }
+      ],
+      "halaman": [
+        6
+      ],
+      "penjelasan": "OJkup Jelas."
+    },
+    {
+      "nomor": "13",
+      "ayat": [
+        {
+          "nomor": null,
+          "teks": "Kepala Daerah dapat rnemberikan keringanan atao 57embebasan pajak terhadap pomotongan hewan yang sifataya :\na. Keavmaan/hajal\nb. Kepentingan sosial."
+        }
+      ],
+      "halaman": [
+        6
+      ],
+      "penjelasan": "OJkup Jelas."
+    },
+    {
+      "nomor": "14",
+      "ayat": [
+        {
+          "nomor": null,
+          "teks": "Pengawasan atas ketaatan ~ p~usutan atas pelanggaran ketentuan dalsrn Peraturan Daerah ini, diwt:tStan ke&>ada Perangkat Pernerintah Daerah sesuai dengan tata kerja yang ada. BAB Vil KETENltJAN PIDANA"
+        }
+      ],
+      "halaman": [
+        6
+      ],
+      "penjelasan": "OJkup Jelas."
+    },
+    {
+      "nomor": "15",
+      "ayat": [
+        {
+          "nomor": null,
+          "teks": "Pe~r.~aran ttrhaclllp se{lab ketentuan dalam Peraturan Daerah ini diancam dengan ptdana kurungan selama-lamanya tr~bulan atau denda setinggi-tingginya Rp. 50.000, - (lirrta puluh ribu rupiah)."
+        }
+      ],
+      "halaman": [
+        6
+      ],
+      "penjelasan": "Hukwnan k:urung.an serta denda dalam pasal ini ber-\npedoman pada pasal 41 ayat (1) Undang-undang No.\n5Tahun1974"
+    },
+    {
+      "nomor": "16",
+      "ayat": [
+        {
+          "nomor": "1",
+          "teks": "Semua izin yang telah dikeluarkan berdasarkan Peraturan Daerah terdahulu di· nyatakan tetap berlaku selama-!amanya tiga buJan terhitung sejak ditetapkannyn Peraturan Daerah inl, \\"
+        },
+        {
+          "nomor": "2",
+          "teks": "Setelah jangka waktu yangdimaksud dalam ayat (1) pasal i.ni berakhir, seJuruh izin sudah hams disesuaikan dengan Peraturan Daerah ini."
+        }
+      ],
+      "halaman": [
+        7
+      ],
+      "penjelasan": "OJkup jelas.\nPasal 17 Hal-hal yangbelum diatur dalam Peraturan Daerah ini\ndimaksudkan sepanjang pelaksaoaannya ditetapkan\ndengan Surat Keputusan Kepala Daerah,"
+    },
+    {
+      "nomor": "17",
+      "ayat": [
+        {
+          "nomor": null,
+          "teks": "Hal-hal yang beJum diatur dalam Peraturan Daerah ini akan diatur kemudian dengan Surat keputusan Kepala Daerah."
+        }
+      ],
+      "halaman": [
+        7
+      ]
+    },
+    {
+      "nomor": "18",
+      "ayat": [
+        {
+          "nomor": "1",
+          "teks": "Dengan berJakunya Peraturan Daerah ml, makaPeraturan Daemh Kotapradja Ma· kassar No.265/Il/DPRD/1960 tanggal 19 Pebn:ari 1960 tentang·Pajak Potongarl Hewan yang te!ah beberapa kali diubah terakhir dengan Perafuran Daerah No; 23/DPRD-GR/1965 tanggal 4 Agustus 1965 (Lembaran Daerah No.12 Tabun 1976) dinyatakan tidak berlaku Jagi."
+        },
+        {
+          "nomor": "2",
+          "teks": "Peraturan Daerah ini rnulai berlaku pada tanggal diunangkannya dalam Lembaran Daerah Kotamadya Daerah Tingkat 11 Ujung Pandang. DEWAN PERWAKILAN RAKYAT Ujung Pandang, 31Maret1983 DAERAH KOTAMADYA DAERAH WALIKOTAMADYA KEPALA DAERAH TINGKAT II UJUNGPANDANG. TINGKAT II URJNG PANDANG, KETUA, Cap/ltd. Cap/ltd. ( M. AJ{S\\'AD ABU ) (ABUSTAM) Disyahkan oleb Menleri Dalam NegeriRI. denga.nSuratkeputusanNo.973.524.53~102 tanggal 25 Januari 1984. Diundangkan daJaJnLembaran Daerah Kotamadya Daerah Tingkat II Ujung Pandmig No. l Tahun 1984 tanggal 13 Pebruari 1984 Seri A No.I. ·· Sekretaris l'otamadya/Daerah Tmgk.at II lJ.rung Pandang · ttd. ( H. MllU)IN KASIM SH. ) NIP. 010027231"
+        }
+      ],
+      "halaman": [
+        7,
+        8
+      ],
+      "penjelasan": "Cukuo ielas,"
+    }
+  ],
+  "perubahan": [],
+  "peringatan": [
+    "kata mencurigakan (OCR): \"L.BIBABAN•\" hal 1, \"OAfRAH\" hal 1, \"~\" hal 1, \"KOfAMADYA\" hal 1, \"KOfAMADYA\" hal 1, \"ma·\" hal 1, \"peniDgkat·\" hal 1, \"·\" hal 1, \"bahwaPeraturan\" hal 1, \"P~b_!Uari\" hal 1, \"·\" hal 1, \"perlumenseJuarkan\" hal 2, \"Kabupaten·kabupaten\" hal 2, \"KETENlUAN\" hal 3, \"Sap~\" hal 3, \"me~bunuh\" hal 3, \"si·\" hal 3, \"~epala\" hal 4, \"dipotong.·\" hal 4, \"••••••••••••••••••.•••\" hal 6, \"..•\" hal 6, \"100.-·\" hal 6, \"...•...............•\" hal 6, \"~\" hal 6, \"p~usutan\" hal 6, \"KETENltJAN\" hal 6, \"Pe~r.~aran\" hal 6, \"se{lab\" hal 6, \"tr~bulan\" hal 6, \"KElENTIJAN\" hal 7, \"di·\" hal 7, \"\\\" hal 7, \"berJakunya\" hal 7, \"makaPeraturan\" hal 7, \"Ma·\" hal 7, \"tentang·Pajak\" hal 7, \"AJ{S\\'AD\" hal 7, \"denga.nSuratkeputusanNo.973.524.53~102\" hal 8, \"··\" hal 8, \"·\" hal 8",
+    "batang: judul rusak \"Pasa 1\" (hal 5) dibaca sebagai Pasal 7 dari urutan",
+    "Pasal tanpa Penjelasan tertaut: 5, 6, 7, 8, 17"
+  ]
+}
