@@ -18,6 +18,10 @@ Pasal bernomor dengan huruf (mis. Pasal 5A) yang disisipkan ke sebuah Peraturan 
 **Asal Teks**:
 Cara teks sebuah Pasal diperoleh: **digital** (dari lapisan teks PDF resmi) atau **OCR** (dibaca mesin dari hasil scan, mungkin ada salah baca). Teks OCR selalu disertai tautan ke PDF resmi.
 
+**OCR, diperiksa manual**:
+Label pada sebuah Pasal ber-Asal Teks OCR yang teksnya sudah dibaca pengembang berdampingan dengan PDF resmi, dengan koreksinya tercatat di repo dan diterapkan saat ingest. Asal Teks-nya tetap OCR dan tetap disertai tautan ke PDF resmi. Label ini menyatakan pemeriksaan, bukan jaminan bebas salah.
+_Avoid_: terverifikasi, teks resmi
+
 **Penjelasan**:
 Bagian resmi sebuah Peraturan (Penjelasan Umum dan Penjelasan Pasal demi Pasal) yang ditulis pembentuk peraturan.
 _Avoid_: memakai kata ini untuk teks buatan AI

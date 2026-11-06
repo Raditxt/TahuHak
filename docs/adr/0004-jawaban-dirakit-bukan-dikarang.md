@@ -11,4 +11,5 @@ Keputusan ini **menggantikan** keputusan ronde 2 (Q4), yaitu Claude via API seba
 - Mutu Jawaban bergantung pada cakupan Uraian Awam dan Padanan Istilah, bukan pada kepintaran model. Uraian Awam ditulis pengembang saat pengembangan dengan Claude Code, diperiksa, lalu disimpan di repo, dikerjakan per Topik.
 - Kalau model lokal gagal atau lambat, pencarian tetap berjalan dengan Padanan Istilah dan full-text search saja.
 - Fitur di UI tidak lagi dibingkai sebagai "Tanya AI", karena AI hanya menerjemahkan dan memilih.
+- **Diperbarui 6 Nov 2026:** di VPS bersama (ADR-0005), model lokal belum dipakai. Penerjemah berjalan dengan Padanan Istilah + FTS, dan model embedding kecil hanya ditambahkan kalau set uji menunjukkan perlu. Rencana awal di bawah dipertahankan sebagai catatan.
 - Model lokal (instruksi, 1–4B, dipilih lewat set uji) berjalan di `llama-server` llama.cpp: 2 thread, satu permintaan per waktu, memori dibatasi sekitar 3 GB. Outputnya dikunci dengan JSON schema `{ topik, kata_kunci }`, jadi model tidak bisa mengeluarkan teks bebas.
