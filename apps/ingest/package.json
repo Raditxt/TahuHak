@@ -1,0 +1,22 @@
+{
+  "name": "@tahuhak/ingest",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "ingest": "tsx src/cli.ts",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@tahuhak/db": "workspace:*",
+    "drizzle-orm": "^0.45.4",
+    "pdfjs-dist": "^6.5.438",
+    "postgres": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "pdf-lib": "^1.17.1",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
+  }
+}

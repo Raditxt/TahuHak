@@ -1,0 +1,18 @@
+# Postgres untuk pengembangan dan tes di laptop. Port 54329 supaya tidak bentrok dengan Postgres lokal.
+services:
+  postgres:
+    image: postgres:18
+    environment:
+      POSTGRES_USER: tahuhak
+      POSTGRES_PASSWORD: tahuhak
+      POSTGRES_DB: tahuhak
+    ports:
+      - "54329:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tahuhak"]
+      interval: 2s
+      retries: 30
+volumes:
+  pgdata:
