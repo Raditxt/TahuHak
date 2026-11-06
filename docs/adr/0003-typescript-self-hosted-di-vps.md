@@ -1,6 +1,8 @@
 # TypeScript penuh, self-hosted di satu VPS
 
-Seluruh sistem ditulis dalam TypeScript (monorepo pnpm: web Next.js, CLI ingestion Node, skema Drizzle bersama) dan berjalan di satu VPS milik pengembang (Hostinger KVM 2) lewat Docker Compose + Caddy, dengan PostgreSQL (+ pgvector bila nanti perlu) dan Better Auth di Postgres yang sama. Rancangan awal di `docs/keputusan-produk.md` adalah Supabase + Vercel + ingestion Python. Itu diganti karena tiga hal: pengembang ingin satu bahasa, VPS sudah dibayar sehingga tidak ada biaya tambahan, dan log tetap sepenuhnya di tangan sendiri sesuai ADR-0002. Riset sumber (4 Nov 2026) menunjukkan peraturan.go.id, JDIH BPK, JDIH Sulsel, dan JDIH Makassar bisa diambil dengan HTTP biasa, jadi headless browser tidak diperlukan.
+> **Diperbarui 6 Nov 2026:** server, jalur akses publik, dan anggaran sumber daya digantikan [ADR-0005](0005-vps-bersama-waregos-lewat-cloudflare-tunnel.md) (VPS bersama Waregos, Cloudflare Tunnel, batas 1 GB, tanpa model lokal, ingestion di laptop). Keputusan bahasa dan OCR di bawah tetap berlaku.
+
+Seluruh sistem ditulis dalam TypeScript (monorepo pnpm: web Next.js, CLI ingestion Node, skema Drizzle bersama) dan berjalan di VPS lewat Docker Compose (servernya diatur ADR-0005), dengan PostgreSQL (+ pgvector bila nanti perlu) dan Better Auth di Postgres yang sama. Rancangan awal di `docs/keputusan-produk.md` adalah Supabase + Vercel + ingestion Python. Itu diganti karena tiga hal: pengembang ingin satu bahasa, tidak ada biaya platform tambahan, dan log aplikasi tetap di tangan sendiri sesuai ADR-0002. Satu-satunya pihak luar di jalur permintaan adalah Cloudflare sebagai pemroses transit (ADR-0005). Riset sumber (4 Nov 2026) menunjukkan peraturan.go.id, JDIH BPK, JDIH Sulsel, dan JDIH Makassar bisa diambil dengan HTTP biasa, jadi headless browser tidak diperlukan.
 
 ## Considered Options
 
@@ -11,16 +13,10 @@ Seluruh sistem ditulis dalam TypeScript (monorepo pnpm: web Next.js, CLI ingesti
 
 OCR (`ocrmypdf --force-ocr -l ind`) untuk Perda hasil scan dijalankan **sekali di laptop pengembang**, lalu teks hasilnya diunggah ke VPS. VPS tidak punya job OCR terjadwal. Kalau penjelajahan bulanan menemukan PDF scan baru, PDF itu ditandai masuk antrean OCR untuk diproses di laptop.
 
-## Anggaran sumber daya KVM 2 (2 vCPU, 8 GB RAM, 100 GB NVMe)
+## Anggaran sumber daya
 
-Perkiraan RAM saat puncak: OS + Docker + Caddy sekitar 0,6 GB, Postgres sekitar 1,5 GB, Next.js sekitar 0,5 GB, `llama-server` dibatasi 3 GB (model 4B Q4 sekitar 2,5 GB ditambah KV cache), dan job ingestion malam sekitar 0,5 GB. Totalnya sekitar 6,1 GB, jadi **muat** dengan ruang sisa sekitar 2 GB, ditambah swap 2 GB sebagai pengaman. Hambatan sebenarnya adalah **CPU**: inferensi memakai kedua vCPU selama 5–20 detik. Karena itu kontainer model dibatasi `cpus: 1.5` agar web dan database selalu kebagian CPU, dan latensinya diukur sebelum rilis.
-
-Kalau hasil ukur tidak memuaskan, alternatifnya berurutan dari yang paling ringan perubahannya:
-
-1. Pakai model generatif yang lebih kecil (1–1,5B).
-2. Ganti LLM generatif dengan **model embedding kecil** (sekitar 100–500 MB) untuk memilih Topik berdasarkan kemiripan. Kata kuncinya cukup dari Padanan Istilah.
-3. Lepas model sama sekali dan pakai Padanan Istilah + FTS saja (sudah menjadi jalur cadangan di ADR-0004).
+Anggaran awal untuk Hostinger KVM 2 (8 GB, llama-server 3 GB) sudah tidak berlaku. Anggaran yang berlaku ada di ADR-0005. Urutan alternatif model yang dulu ditulis di sini (model lebih kecil → model embedding kecil → tanpa model) tetap menjadi acuan, dan ADR-0005 memulai dari langkah terakhir: tanpa model.
 
 ## Consequences
 
-Backup (`pg_dump` harian ke penyimpanan di luar VPS), uptime, dan pembaruan keamanan menjadi tanggung jawab pengembang. Tidak ada preview deploy otomatis. Web, database, model lokal, dan job ingestion berbagi 2 vCPU, jadi ingestion dijadwalkan di jam sepi.
+Backup (`pg_dump` harian ke penyimpanan di luar VPS), uptime, dan pembaruan keamanan menjadi tanggung jawab pengembang. Tidak ada preview deploy otomatis. Ingestion tidak berjalan di VPS (ADR-0005).
