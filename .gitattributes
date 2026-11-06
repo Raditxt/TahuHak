@@ -1,0 +1,2 @@
+# Snapshot Seam A dibandingkan byte demi byte; jangan diubah ke CRLF saat checkout di Windows.
+apps/ingest/test/__snapshots__/** text eol=lf
