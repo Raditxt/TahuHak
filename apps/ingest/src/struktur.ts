@@ -81,6 +81,9 @@ function disebutPembuka(t: string, berikut: string): Set<string> {
   return new Set([...k.matchAll(/Pasal (\d+[A-Z]?)/g)].map((m) => m[1]!));
 }
 
+/** Pesan tinjauan Pasal Lampiran diawali "Lampiran, " agar tidak tertukar dengan Pasal batang tubuh bernomor sama. */
+const awalan = (bagian: Bagian) => (bagian === "lampiran" ? "Lampiran, " : "");
+
 function potongPasal(baris: Baris[], bagian: Bagian, tinjauan: Tinjauan[]): PasalMentah[] {
   const pasal: PasalMentah[] = [];
   let cur: PasalMentah | null = null;
@@ -111,10 +114,10 @@ function potongPasal(baris: Baris[], bagian: Bagian, tinjauan: Tinjauan[]): Pasa
       } else if (judul.rusak && n !== berikutnya(prev) && (rel === "tolak" || pecahNomor(n!).angka - pecahNomor(prev ?? "0").angka > MAKS_LONCAT_RUSAK)) {
         n = berikutnya(prev);
         rel = "urut";
-        tinjauan.push({ jenis: "judul-pasal-ditebak", bagian, pasal: n, pesan: `Judul rusak "${t}" (hal ${hal}) dibaca sebagai Pasal ${n} dari urutan` });
+        tinjauan.push({ jenis: "judul-pasal-ditebak", bagian, pasal: n, pesan: `${awalan(bagian)}Judul rusak "${t}" (hal ${hal}) dibaca sebagai Pasal ${n} dari urutan` });
       }
       if (rel !== "tolak") {
-        if (rel === "loncat") tinjauan.push({ jenis: "pasal-loncat", bagian, pasal: n!, pesan: `Nomor Pasal loncat dari ${prev ?? "awal"} ke ${n} (hal ${hal})` });
+        if (rel === "loncat") tinjauan.push({ jenis: "pasal-loncat", bagian, pasal: n!, pesan: `${awalan(bagian)}Nomor Pasal loncat dari ${prev ?? "awal"} ke ${n} (hal ${hal})` });
         cur = { nomor: n!, halaman: [hal], baris: [], pengubah: bagian === "lampiran" && isPengubah(baris, i + 1) };
         pasal.push(cur);
         tutup = false;
@@ -189,7 +192,7 @@ function pecahAyat(p: PasalMentah, bagian: Bagian, tinjauan: Tinjauan[]): AyatHa
     const lanjutanRujukan = /\bayat$/.test(ayat.at(-1)?.lines.at(-1) ?? "");
     if (m && !lanjutanRujukan) {
       const n = Number(m[1]);
-      if (n !== harap) tinjauan.push({ jenis: "ayat-tidak-urut", bagian, pasal: p.nomor, pesan: `Pasal ${p.nomor}: Ayat (${n}) muncul, diharapkan (${harap})` });
+      if (n !== harap) tinjauan.push({ jenis: "ayat-tidak-urut", bagian, pasal: p.nomor, pesan: `${awalan(bagian)}Pasal ${p.nomor}: Ayat (${n}) muncul, diharapkan (${harap})` });
       harap = n + 1;
       ayat.push({ nomor: m[1]!, lines: m[2] ? [m[2]] : [] });
     } else {

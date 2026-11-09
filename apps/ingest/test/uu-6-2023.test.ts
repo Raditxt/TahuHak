@@ -78,8 +78,8 @@ describe("ingest UU 6/2023", () => {
   it("menandai Ayat yang tidak urut karena salah baca OCR (\"(2t\", \"14)\") sebagai perlu tinjauan", async () => {
     const t = await db.select().from(schema.catatanTinjauan);
     expect(t.map((x) => [x.jenis, x.pesan])).toEqual([
-      ["ayat-tidak-urut", "Pasal 133: Ayat (3) muncul, diharapkan (2)"],
-      ["ayat-tidak-urut", "Pasal 138: Ayat (5) muncul, diharapkan (4)"],
+      ["ayat-tidak-urut", "Lampiran, Pasal 133: Ayat (3) muncul, diharapkan (2)"],
+      ["ayat-tidak-urut", "Lampiran, Pasal 138: Ayat (5) muncul, diharapkan (4)"],
     ]);
     expect((await versiPasal("lampiran", "133")).versi.perluTinjauan).toBe(true);
     expect((await versiPasal("lampiran", "138")).versi.perluTinjauan).toBe(true);
