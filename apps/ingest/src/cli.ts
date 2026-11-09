@@ -17,8 +17,13 @@ const { db, tutup } = sambung();
 try {
   await migrasi(db);
   const r = await ingest(meta, { db, dirData });
-  console.log(`${meta.jenis} ${meta.nomor}/${meta.tahun}: ${r.pasal} Pasal, ${r.penjelasan} Penjelasan tertaut, ${r.tinjauan.length} perlu tinjauan`);
-  for (const t of r.tinjauan) console.log(`  perlu tinjauan: ${t}`);
+  console.log(`${meta.jenis} ${meta.nomor}/${meta.tahun}: teks ${r.penilaian} (kata aneh ${r.kataAnehPer1000}‰)`);
+  if (r.penilaian === "perlu-ocr") {
+    console.log("  Lapisan teks tidak layak: berkas masuk antrean OCR laptop, Pasal tidak diurai (ADR-0003).");
+  } else {
+    console.log(`  ${r.pasal} Pasal, ${r.penjelasan} Penjelasan tertaut, ${r.tinjauan.length} perlu tinjauan`);
+    for (const t of r.tinjauan) console.log(`  perlu tinjauan: ${t}`);
+  }
 } finally {
   await tutup();
 }

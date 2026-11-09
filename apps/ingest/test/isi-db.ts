@@ -15,8 +15,16 @@ export async function bacaIsi(db: Db, jenis: string, nomor: string, tahun: numbe
   const rujukanVersi = new Map(versi.map((v) => [v.id, v.rujukan]));
   return {
     peraturan: { jenis: p.jenis, nomor: p.nomor, tahun: p.tahun, judul: p.judul, asalTeks: p.asalTeks },
-    berkas: berkas.map((b) => ({ url: b.url, halamanDetail: b.halamanDetail, sha256: b.sha256, ukuran: b.ukuran })),
+    berkas: berkas.map((b) => ({
+      url: b.url,
+      halamanDetail: b.halamanDetail,
+      sha256: b.sha256,
+      ukuran: b.ukuran,
+      penilaianTeks: b.penilaianTeks,
+      kataAnehPer1000: b.kataAnehPer1000,
+    })),
     pasal: pasal.map((ps) => ({
+      bagian: ps.bagian,
       nomor: ps.nomor,
       sisipan: ps.sisipan,
       versi: versi

@@ -11,11 +11,14 @@
       "url": "https://peraturan.bpk.go.id/Download/31128/UU%20Nomor%2013%20Tahun%202003.pdf",
       "halamanDetail": "https://peraturan.bpk.go.id/Details/43013/uu-no-13-tahun-2003",
       "sha256": "0d3868d19082be34c875a376729998b4d948cac745b1e613d90e6f257d5bf273",
-      "ukuran": 297503
+      "ukuran": 297503,
+      "penilaianTeks": "digital",
+      "kataAnehPer1000": 0
     }
   ],
   "pasal": [
     {
+      "bagian": "batang",
       "nomor": "1",
       "sisipan": false,
       "versi": [
@@ -41,6 +44,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "2",
       "sisipan": false,
       "versi": [
@@ -62,6 +66,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "3",
       "sisipan": false,
       "versi": [
@@ -83,6 +88,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "4",
       "sisipan": false,
       "versi": [
@@ -104,6 +110,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "5",
       "sisipan": false,
       "versi": [
@@ -125,6 +132,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "6",
       "sisipan": false,
       "versi": [
@@ -146,6 +154,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "7",
       "sisipan": false,
       "versi": [
@@ -175,6 +184,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "8",
       "sisipan": false,
       "versi": [
@@ -205,6 +215,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "9",
       "sisipan": false,
       "versi": [
@@ -226,6 +237,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "10",
       "sisipan": false,
       "versi": [
@@ -259,6 +271,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "11",
       "sisipan": false,
       "versi": [
@@ -280,6 +293,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "12",
       "sisipan": false,
       "versi": [
@@ -309,6 +323,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "13",
       "sisipan": false,
       "versi": [
@@ -338,6 +353,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "14",
       "sisipan": false,
       "versi": [
@@ -371,6 +387,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "15",
       "sisipan": false,
       "versi": [
@@ -392,6 +409,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "16",
       "sisipan": false,
       "versi": [
@@ -421,6 +439,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "17",
       "sisipan": false,
       "versi": [
@@ -463,6 +482,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "18",
       "sisipan": false,
       "versi": [
@@ -500,6 +520,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "19",
       "sisipan": false,
       "versi": [
@@ -521,6 +542,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "20",
       "sisipan": false,
       "versi": [
@@ -547,6 +569,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "21",
       "sisipan": false,
       "versi": [
@@ -568,6 +591,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "22",
       "sisipan": false,
       "versi": [
@@ -597,6 +621,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "23",
       "sisipan": false,
       "versi": [
@@ -618,6 +643,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "24",
       "sisipan": false,
       "versi": [
@@ -639,6 +665,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "25",
       "sisipan": false,
       "versi": [
@@ -669,6 +696,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "26",
       "sisipan": false,
       "versi": [
@@ -694,6 +722,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "27",
       "sisipan": false,
       "versi": [
@@ -719,6 +748,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "28",
       "sisipan": false,
       "versi": [
@@ -744,6 +774,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "29",
       "sisipan": false,
       "versi": [
@@ -773,6 +804,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "30",
       "sisipan": false,
       "versi": [
@@ -802,6 +834,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "31",
       "sisipan": false,
       "versi": [
@@ -823,6 +856,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "32",
       "sisipan": false,
       "versi": [
@@ -853,6 +887,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "33",
       "sisipan": false,
       "versi": [
@@ -874,6 +909,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "34",
       "sisipan": false,
       "versi": [
@@ -895,6 +931,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "35",
       "sisipan": false,
       "versi": [
@@ -924,6 +961,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "36",
       "sisipan": false,
       "versi": [
@@ -954,6 +992,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "37",
       "sisipan": false,
       "versi": [
@@ -979,6 +1018,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "38",
       "sisipan": false,
       "versi": [
@@ -1008,6 +1048,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "39",
       "sisipan": false,
       "versi": [
@@ -1041,6 +1082,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "40",
       "sisipan": false,
       "versi": [
@@ -1066,6 +1108,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "41",
       "sisipan": false,
       "versi": [
@@ -1100,6 +1143,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "42",
       "sisipan": false,
       "versi": [
@@ -1141,6 +1185,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "43",
       "sisipan": false,
       "versi": [
@@ -1175,6 +1220,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "44",
       "sisipan": false,
       "versi": [
@@ -1200,6 +1246,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "45",
       "sisipan": false,
       "versi": [
@@ -1225,6 +1272,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "46",
       "sisipan": false,
       "versi": [
@@ -1250,6 +1298,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "47",
       "sisipan": false,
       "versi": [
@@ -1283,6 +1332,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "48",
       "sisipan": false,
       "versi": [
@@ -1304,6 +1354,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "49",
       "sisipan": false,
       "versi": [
@@ -1325,6 +1376,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "50",
       "sisipan": false,
       "versi": [
@@ -1346,6 +1398,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "51",
       "sisipan": false,
       "versi": [
@@ -1371,6 +1424,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "52",
       "sisipan": false,
       "versi": [
@@ -1400,6 +1454,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "53",
       "sisipan": false,
       "versi": [
@@ -1421,6 +1476,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "54",
       "sisipan": false,
       "versi": [
@@ -1451,6 +1507,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "55",
       "sisipan": false,
       "versi": [
@@ -1472,6 +1529,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "56",
       "sisipan": false,
       "versi": [
@@ -1497,6 +1555,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "57",
       "sisipan": false,
       "versi": [
@@ -1526,6 +1585,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "58",
       "sisipan": false,
       "versi": [
@@ -1551,6 +1611,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "59",
       "sisipan": false,
       "versi": [
@@ -1600,6 +1661,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "60",
       "sisipan": false,
       "versi": [
@@ -1626,6 +1688,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "61",
       "sisipan": false,
       "versi": [
@@ -1663,6 +1726,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "62",
       "sisipan": false,
       "versi": [
@@ -1684,6 +1748,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "63",
       "sisipan": false,
       "versi": [
@@ -1709,6 +1774,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "64",
       "sisipan": false,
       "versi": [
@@ -1730,6 +1796,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "65",
       "sisipan": false,
       "versi": [
@@ -1784,6 +1851,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "66",
       "sisipan": false,
       "versi": [
@@ -1818,6 +1886,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "67",
       "sisipan": false,
       "versi": [
@@ -1843,6 +1912,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "68",
       "sisipan": false,
       "versi": [
@@ -1864,6 +1934,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "69",
       "sisipan": false,
       "versi": [
@@ -1893,6 +1964,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "70",
       "sisipan": false,
       "versi": [
@@ -1923,6 +1995,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "71",
       "sisipan": false,
       "versi": [
@@ -1952,6 +2025,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "72",
       "sisipan": false,
       "versi": [
@@ -1973,6 +2047,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "73",
       "sisipan": false,
       "versi": [
@@ -1994,6 +2069,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "74",
       "sisipan": false,
       "versi": [
@@ -2024,6 +2100,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "75",
       "sisipan": false,
       "versi": [
@@ -2049,6 +2126,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "76",
       "sisipan": false,
       "versi": [
@@ -2087,6 +2165,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "77",
       "sisipan": false,
       "versi": [
@@ -2120,6 +2199,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "78",
       "sisipan": false,
       "versi": [
@@ -2154,6 +2234,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "79",
       "sisipan": false,
       "versi": [
@@ -2191,6 +2272,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "80",
       "sisipan": false,
       "versi": [
@@ -2212,6 +2294,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "81",
       "sisipan": false,
       "versi": [
@@ -2237,6 +2320,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "82",
       "sisipan": false,
       "versi": [
@@ -2262,6 +2346,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "83",
       "sisipan": false,
       "versi": [
@@ -2283,6 +2368,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "84",
       "sisipan": false,
       "versi": [
@@ -2304,6 +2390,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "85",
       "sisipan": false,
       "versi": [
@@ -2338,6 +2425,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "86",
       "sisipan": false,
       "versi": [
@@ -2367,6 +2455,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "87",
       "sisipan": false,
       "versi": [
@@ -2392,6 +2481,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "88",
       "sisipan": false,
       "versi": [
@@ -2425,6 +2515,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "89",
       "sisipan": false,
       "versi": [
@@ -2459,6 +2550,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "90",
       "sisipan": false,
       "versi": [
@@ -2488,6 +2580,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "91",
       "sisipan": false,
       "versi": [
@@ -2513,6 +2606,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "92",
       "sisipan": false,
       "versi": [
@@ -2543,6 +2637,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "93",
       "sisipan": false,
       "versi": [
@@ -2581,6 +2676,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "94",
       "sisipan": false,
       "versi": [
@@ -2602,6 +2698,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "95",
       "sisipan": false,
       "versi": [
@@ -2636,6 +2733,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "96",
       "sisipan": false,
       "versi": [
@@ -2657,6 +2755,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "97",
       "sisipan": false,
       "versi": [
@@ -2678,6 +2777,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "98",
       "sisipan": false,
       "versi": [
@@ -2711,6 +2811,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "99",
       "sisipan": false,
       "versi": [
@@ -2736,6 +2837,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "100",
       "sisipan": false,
       "versi": [
@@ -2765,6 +2867,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "101",
       "sisipan": false,
       "versi": [
@@ -2798,6 +2901,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "102",
       "sisipan": false,
       "versi": [
@@ -2827,6 +2931,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "103",
       "sisipan": false,
       "versi": [
@@ -2848,6 +2953,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "104",
       "sisipan": false,
       "versi": [
@@ -2877,6 +2983,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "105",
       "sisipan": false,
       "versi": [
@@ -2902,6 +3009,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "106",
       "sisipan": false,
       "versi": [
@@ -2936,6 +3044,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "107",
       "sisipan": false,
       "versi": [
@@ -2969,6 +3078,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "108",
       "sisipan": false,
       "versi": [
@@ -2995,6 +3105,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "109",
       "sisipan": false,
       "versi": [
@@ -3016,6 +3127,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "110",
       "sisipan": false,
       "versi": [
@@ -3045,6 +3157,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "111",
       "sisipan": false,
       "versi": [
@@ -3083,6 +3196,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "112",
       "sisipan": false,
       "versi": [
@@ -3116,6 +3230,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "113",
       "sisipan": false,
       "versi": [
@@ -3141,6 +3256,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "114",
       "sisipan": false,
       "versi": [
@@ -3162,6 +3278,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "115",
       "sisipan": false,
       "versi": [
@@ -3183,6 +3300,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "116",
       "sisipan": false,
       "versi": [
@@ -3216,6 +3334,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "117",
       "sisipan": false,
       "versi": [
@@ -3237,6 +3356,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "118",
       "sisipan": false,
       "versi": [
@@ -3258,6 +3378,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "119",
       "sisipan": false,
       "versi": [
@@ -3287,6 +3408,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "120",
       "sisipan": false,
       "versi": [
@@ -3317,6 +3439,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "121",
       "sisipan": false,
       "versi": [
@@ -3338,6 +3461,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "122",
       "sisipan": false,
       "versi": [
@@ -3359,6 +3483,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "123",
       "sisipan": false,
       "versi": [
@@ -3392,6 +3517,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "124",
       "sisipan": false,
       "versi": [
@@ -3421,6 +3547,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "125",
       "sisipan": false,
       "versi": [
@@ -3442,6 +3569,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "126",
       "sisipan": false,
       "versi": [
@@ -3471,6 +3599,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "127",
       "sisipan": false,
       "versi": [
@@ -3497,6 +3626,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "128",
       "sisipan": false,
       "versi": [
@@ -3518,6 +3648,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "129",
       "sisipan": false,
       "versi": [
@@ -3543,6 +3674,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "130",
       "sisipan": false,
       "versi": [
@@ -3573,6 +3705,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "131",
       "sisipan": false,
       "versi": [
@@ -3602,6 +3735,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "132",
       "sisipan": false,
       "versi": [
@@ -3627,6 +3761,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "133",
       "sisipan": false,
       "versi": [
@@ -3648,6 +3783,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "134",
       "sisipan": false,
       "versi": [
@@ -3669,6 +3805,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "135",
       "sisipan": false,
       "versi": [
@@ -3690,6 +3827,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "136",
       "sisipan": false,
       "versi": [
@@ -3715,6 +3853,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "137",
       "sisipan": false,
       "versi": [
@@ -3736,6 +3875,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "138",
       "sisipan": false,
       "versi": [
@@ -3761,6 +3901,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "139",
       "sisipan": false,
       "versi": [
@@ -3782,6 +3923,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "140",
       "sisipan": false,
       "versi": [
@@ -3816,6 +3958,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "141",
       "sisipan": false,
       "versi": [
@@ -3853,6 +3996,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "142",
       "sisipan": false,
       "versi": [
@@ -3878,6 +4022,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "143",
       "sisipan": false,
       "versi": [
@@ -3903,6 +4048,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "144",
       "sisipan": false,
       "versi": [
@@ -3924,6 +4070,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "145",
       "sisipan": false,
       "versi": [
@@ -3945,6 +4092,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "146",
       "sisipan": false,
       "versi": [
@@ -3974,6 +4122,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "147",
       "sisipan": false,
       "versi": [
@@ -3995,6 +4144,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "148",
       "sisipan": false,
       "versi": [
@@ -4024,6 +4174,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "149",
       "sisipan": false,
       "versi": [
@@ -4065,6 +4216,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "150",
       "sisipan": false,
       "versi": [
@@ -4086,6 +4238,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "151",
       "sisipan": false,
       "versi": [
@@ -4115,6 +4268,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "152",
       "sisipan": false,
       "versi": [
@@ -4145,6 +4299,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "153",
       "sisipan": false,
       "versi": [
@@ -4171,6 +4326,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "154",
       "sisipan": false,
       "versi": [
@@ -4192,6 +4348,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "155",
       "sisipan": false,
       "versi": [
@@ -4221,6 +4378,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "156",
       "sisipan": false,
       "versi": [
@@ -4259,6 +4417,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "157",
       "sisipan": false,
       "versi": [
@@ -4293,6 +4452,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "158",
       "sisipan": false,
       "versi": [
@@ -4327,6 +4487,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "159",
       "sisipan": false,
       "versi": [
@@ -4348,6 +4509,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "160",
       "sisipan": false,
       "versi": [
@@ -4394,6 +4556,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "161",
       "sisipan": false,
       "versi": [
@@ -4423,6 +4586,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "162",
       "sisipan": false,
       "versi": [
@@ -4457,6 +4621,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "163",
       "sisipan": false,
       "versi": [
@@ -4482,6 +4647,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "164",
       "sisipan": false,
       "versi": [
@@ -4512,6 +4678,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "165",
       "sisipan": false,
       "versi": [
@@ -4533,6 +4700,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "166",
       "sisipan": false,
       "versi": [
@@ -4554,6 +4722,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "167",
       "sisipan": false,
       "versi": [
@@ -4596,6 +4765,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "168",
       "sisipan": false,
       "versi": [
@@ -4626,6 +4796,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "169",
       "sisipan": false,
       "versi": [
@@ -4656,6 +4827,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "170",
       "sisipan": false,
       "versi": [
@@ -4677,6 +4849,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "171",
       "sisipan": false,
       "versi": [
@@ -4698,6 +4871,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "172",
       "sisipan": false,
       "versi": [
@@ -4719,6 +4893,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "173",
       "sisipan": false,
       "versi": [
@@ -4748,6 +4923,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "174",
       "sisipan": false,
       "versi": [
@@ -4769,6 +4945,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "175",
       "sisipan": false,
       "versi": [
@@ -4794,6 +4971,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "176",
       "sisipan": false,
       "versi": [
@@ -4815,6 +4993,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "177",
       "sisipan": false,
       "versi": [
@@ -4836,6 +5015,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "178",
       "sisipan": false,
       "versi": [
@@ -4861,6 +5041,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "179",
       "sisipan": false,
       "versi": [
@@ -4886,6 +5067,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "180",
       "sisipan": false,
       "versi": [
@@ -4907,6 +5089,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "181",
       "sisipan": false,
       "versi": [
@@ -4928,6 +5111,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "182",
       "sisipan": false,
       "versi": [
@@ -4957,6 +5141,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "183",
       "sisipan": false,
       "versi": [
@@ -4982,6 +5167,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "184",
       "sisipan": false,
       "versi": [
@@ -5007,6 +5193,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "185",
       "sisipan": false,
       "versi": [
@@ -5032,6 +5219,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "186",
       "sisipan": false,
       "versi": [
@@ -5057,6 +5245,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "187",
       "sisipan": false,
       "versi": [
@@ -5082,6 +5271,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "188",
       "sisipan": false,
       "versi": [
@@ -5107,6 +5297,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "189",
       "sisipan": false,
       "versi": [
@@ -5128,6 +5319,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "190",
       "sisipan": false,
       "versi": [
@@ -5157,6 +5349,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "191",
       "sisipan": false,
       "versi": [
@@ -5178,6 +5371,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "192",
       "sisipan": false,
       "versi": [
@@ -5200,6 +5394,7 @@
       ]
     },
     {
+      "bagian": "batang",
       "nomor": "193",
       "sisipan": false,
       "versi": [

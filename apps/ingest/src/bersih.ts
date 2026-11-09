@@ -35,11 +35,26 @@ const MAKS_KATA_SAMBUNG = 40;
 const inti = (s: string) => s.replace(/[^A-Za-z0-9]/g, "");
 
 /**
+ * Header di halaman tanpa nomor halaman (halaman pertama tiap bagian dokumen scan). Hanya dicari di baris teratas,
+ * dan toleran OCR: "NEPUBUK INDONESIA", "REPUEUK INDONESIA", "PRES IDEN".
+ */
+const HEADER = ["PRESIDEN", "REPUBLIK INDONESIA", "PRESIDEN REPUBLIK INDONESIA", "SALINAN"];
+const isHeader = (s: string) =>
+  s.length <= 26 && HEADER.some((h) => levenshtein(s.toUpperCase().replace(/\s+/g, " "), h) <= Math.max(2, Math.floor(h.length * 0.35)));
+
+/**
+ * Footer salinan di kaki halaman dokumen scan Setneg: "SK No 176733 A". OCR kadang menaruhnya di baris yang sama
+ * dengan kata sambung ("Pasal 16. . . SK No t76262 A"), jadi dipotong dari ujung baris.
+ */
+const FOOTER = /(^|\s)SK\s*No\.?\s*[\dlIOt]\S*(\s?[A-Z])?\.?$/i;
+
+/**
  * Kata sambung: baris terakhir halaman yang mengulang awal halaman berikut ("f. bahwa …", "Bagian ...").
- * Dibuang bila intinya mirip awal baris pertama halaman berikut (Levenshtein ≤ 2).
+ * Dibuang bila berakhir "…"/". . ." atau intinya mirip awal baris pertama halaman berikut (Levenshtein ≤ 2).
  */
 function isKataSambung(terakhir: string, awalBerikut: string | undefined): boolean {
   if (!awalBerikut || terakhir.length > MAKS_KATA_SAMBUNG) return false;
+  if (/(\.\s*){2,}[-\s]*$|…$/.test(terakhir)) return true;
   const a = inti(terakhir);
   if (a.length < 4) return false;
   return levenshtein(a, inti(awalBerikut).slice(0, a.length)) <= 2;
@@ -62,6 +77,14 @@ export function bersihkan(halaman: Halaman[]): Baris[] {
     // Semua baris di atas nomor halaman adalah header, apa pun bunyinya.
     const iNo = b.slice(0, BARIS_ATAS).findIndex(isNomorHalaman);
     if (iNo >= 0) b.splice(0, iNo + 1);
+    else while (b.length && isHeader(b[0]!)) b.shift();
+    while (b.length && FOOTER.test(b.at(-1)!)) {
+      const sisa = b.pop()!.replace(FOOTER, "").trim();
+      if (sisa) {
+        b.push(sisa);
+        break;
+      }
+    }
     // Watermark hanya di tepi halaman; baris sama di tengah halaman adalah isi.
     b = b.filter((t, i) => !(wm.has(t) && (i < TEPI || i >= b.length - TEPI)));
     return b;
