@@ -1,0 +1,11 @@
+{
+  "name": "tahuhak",
+  "private": true,
+  "packageManager": "pnpm@10.20.0",
+  "scripts": {
+    "db:up": "docker compose -f docker-compose.dev.yml up -d --wait",
+    "db:generate": "pnpm --filter @tahuhak/db generate",
+    "ingest": "pnpm --filter @tahuhak/ingest ingest",
+    "test": "pnpm -r test"
+  }
+}

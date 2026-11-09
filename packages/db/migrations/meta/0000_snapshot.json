@@ -1,0 +1,521 @@
+{
+  "id": "b0cb85c0-fa2d-4f1f-a2a6-5d077b62f894",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.ayat": {
+      "name": "ayat",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "versi_pasal_id": {
+          "name": "versi_pasal_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "urutan": {
+          "name": "urutan",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "nomor": {
+          "name": "nomor",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "teks": {
+          "name": "teks",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "ayat_versi_pasal_id_versi_pasal_id_fk": {
+          "name": "ayat_versi_pasal_id_versi_pasal_id_fk",
+          "tableFrom": "ayat",
+          "tableTo": "versi_pasal",
+          "columnsFrom": [
+            "versi_pasal_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.berkas_sumber": {
+      "name": "berkas_sumber",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "peraturan_id": {
+          "name": "peraturan_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "url": {
+          "name": "url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "halaman_detail": {
+          "name": "halaman_detail",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "diambil_pada": {
+          "name": "diambil_pada",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sha256": {
+          "name": "sha256",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "path": {
+          "name": "path",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ukuran": {
+          "name": "ukuran",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "berkas_sumber_peraturan_id_peraturan_id_fk": {
+          "name": "berkas_sumber_peraturan_id_peraturan_id_fk",
+          "tableFrom": "berkas_sumber",
+          "tableTo": "peraturan",
+          "columnsFrom": [
+            "peraturan_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "berkas_sumber_sha256_unique": {
+          "name": "berkas_sumber_sha256_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "sha256"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.catatan_tinjauan": {
+      "name": "catatan_tinjauan",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "peraturan_id": {
+          "name": "peraturan_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "versi_pasal_id": {
+          "name": "versi_pasal_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "jenis": {
+          "name": "jenis",
+          "type": "jenis_tinjauan",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "pesan": {
+          "name": "pesan",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "catatan_tinjauan_peraturan_id_peraturan_id_fk": {
+          "name": "catatan_tinjauan_peraturan_id_peraturan_id_fk",
+          "tableFrom": "catatan_tinjauan",
+          "tableTo": "peraturan",
+          "columnsFrom": [
+            "peraturan_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "catatan_tinjauan_versi_pasal_id_versi_pasal_id_fk": {
+          "name": "catatan_tinjauan_versi_pasal_id_versi_pasal_id_fk",
+          "tableFrom": "catatan_tinjauan",
+          "tableTo": "versi_pasal",
+          "columnsFrom": [
+            "versi_pasal_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.pasal": {
+      "name": "pasal",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "peraturan_id": {
+          "name": "peraturan_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "nomor": {
+          "name": "nomor",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "urutan": {
+          "name": "urutan",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sisipan": {
+          "name": "sisipan",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "pasal_peraturan_id_peraturan_id_fk": {
+          "name": "pasal_peraturan_id_peraturan_id_fk",
+          "tableFrom": "pasal",
+          "tableTo": "peraturan",
+          "columnsFrom": [
+            "peraturan_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "pasal_peraturan_id_nomor_unique": {
+          "name": "pasal_peraturan_id_nomor_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "peraturan_id",
+            "nomor"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.penjelasan": {
+      "name": "penjelasan",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "versi_pasal_id": {
+          "name": "versi_pasal_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "teks": {
+          "name": "teks",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "penjelasan_versi_pasal_id_versi_pasal_id_fk": {
+          "name": "penjelasan_versi_pasal_id_versi_pasal_id_fk",
+          "tableFrom": "penjelasan",
+          "tableTo": "versi_pasal",
+          "columnsFrom": [
+            "versi_pasal_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "penjelasan_versi_pasal_id_unique": {
+          "name": "penjelasan_versi_pasal_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "versi_pasal_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.peraturan": {
+      "name": "peraturan",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "jenis": {
+          "name": "jenis",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "nomor": {
+          "name": "nomor",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tahun": {
+          "name": "tahun",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "judul": {
+          "name": "judul",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "asal_teks": {
+          "name": "asal_teks",
+          "type": "asal_teks",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "peraturan_jenis_nomor_tahun_unique": {
+          "name": "peraturan_jenis_nomor_tahun_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "jenis",
+            "nomor",
+            "tahun"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.versi_pasal": {
+      "name": "versi_pasal",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "pasal_id": {
+          "name": "pasal_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sumber_peraturan_id": {
+          "name": "sumber_peraturan_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "rujukan": {
+          "name": "rujukan",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "halaman": {
+          "name": "halaman",
+          "type": "integer[]",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "asal_teks": {
+          "name": "asal_teks",
+          "type": "asal_teks",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "perlu_tinjauan": {
+          "name": "perlu_tinjauan",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "versi_pasal_pasal_id_pasal_id_fk": {
+          "name": "versi_pasal_pasal_id_pasal_id_fk",
+          "tableFrom": "versi_pasal",
+          "tableTo": "pasal",
+          "columnsFrom": [
+            "pasal_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "versi_pasal_sumber_peraturan_id_peraturan_id_fk": {
+          "name": "versi_pasal_sumber_peraturan_id_peraturan_id_fk",
+          "tableFrom": "versi_pasal",
+          "tableTo": "peraturan",
+          "columnsFrom": [
+            "sumber_peraturan_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "versi_pasal_pasal_id_sumber_peraturan_id_unique": {
+          "name": "versi_pasal_pasal_id_sumber_peraturan_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "pasal_id",
+            "sumber_peraturan_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.asal_teks": {
+      "name": "asal_teks",
+      "schema": "public",
+      "values": [
+        "digital",
+        "ocr"
+      ]
+    },
+    "public.jenis_tinjauan": {
+      "name": "jenis_tinjauan",
+      "schema": "public",
+      "values": [
+        "pasal-loncat",
+        "ayat-tidak-urut",
+        "penjelasan-tak-tertaut"
+      ]
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
