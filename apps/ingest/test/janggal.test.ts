@@ -1,19 +1,22 @@
 // Seam A: hasil parse janggal ditandai perlu tinjauan di database.
 // UU 13/2003 tidak punya keanehan, jadi dipakai PDF kecil buatan tes yang sengaja janggal.
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { PDFDocument, StandardFonts } from "pdf-lib";
-import { type Db } from "@tahuhak/db";
+import { PDFDocument, StandardFonts, setTextRenderingMode, TextRenderingMode } from "pdf-lib";
+import { eq } from "drizzle-orm";
+import { schema, type Db } from "@tahuhak/db";
 import { ingest, type SumberMeta } from "../src/ingest.ts";
 import { DIR_DATA_TES, dbTes, fetchTiruan } from "./bantu.ts";
 import { bacaIsi, type IsiDb } from "./isi-db.ts";
 
 const meta: SumberMeta = { id: "tes-janggal", jenis: "UU", nomor: "99", tahun: 2099, judul: "Tes Janggal", url: "https://contoh.test/janggal.pdf" };
 
-async function buatPdf(halaman: string[][]): Promise<Uint8Array> {
+/** `scan`: teks digambar tak terlihat (render mode 3), seperti lapisan OCR di atas gambar hasil scan. */
+async function buatPdf(halaman: string[][], scan = false): Promise<Uint8Array> {
   const doc = await PDFDocument.create();
   const font = await doc.embedFont(StandardFonts.Helvetica);
   for (const baris of halaman) {
     const page = doc.addPage([595, 842]);
+    if (scan) page.pushOperators(setTextRenderingMode(TextRenderingMode.Invisible));
     baris.forEach((t, i) => page.drawText(t, { x: 72, y: 780 - i * 18, size: 11, font }));
   }
   return doc.save();
@@ -65,5 +68,27 @@ describe("entri janggal", () => {
     expect(isi.tinjauan).toEqual(
       expect.arrayContaining([expect.objectContaining({ jenis: "penjelasan-tak-tertaut", versi: null, pesan: expect.stringContaining("Pasal 5") })]),
     );
+  });
+});
+
+describe("lapisan OCR yang tidak layak", () => {
+  const metaScan: SumberMeta = { id: "tes-scan", jenis: "Perda", nomor: "2", tahun: 1983, judul: "Tes Scan Buruk", url: "https://contoh.test/scan.pdf" };
+  // Salah baca seperti di lapisan bawaan Perda Makassar 1983 (prototype #2): simbol asing dan angka bercampur huruf.
+  const rusak = ["Pasa| 1", "Pemturan Daerab {ni} beriaku seiak 2O2O.", "Pasa| 2", "PRESiDEN mene|apkan Ti{ngkat 14 pada l98E."];
+
+  it("masuk antrean OCR laptop: berkas dinilai perlu-ocr dan Pasal tidak diurai", async () => {
+    const pdf = await buatPdf([rusak, rusak], true);
+    const r = await ingest(metaScan, { db, fetch: fetchTiruan({ [metaScan.url]: pdf }), dirData: DIR_DATA_TES, jedaMs: [0, 0] });
+    expect(r).toEqual(expect.objectContaining({ penilaian: "perlu-ocr", pasal: 0 }));
+    expect(r.kataAnehPer1000).toBeGreaterThanOrEqual(10);
+    const isiScan = (await bacaIsi(db, "Perda", "2", 1983))!;
+    expect(isiScan.peraturan.asalTeks).toBe("ocr");
+    expect(isiScan.berkas).toEqual([expect.objectContaining({ url: metaScan.url, penilaianTeks: "perlu-ocr" })]);
+    expect(isiScan.pasal).toEqual([]);
+  });
+
+  it("PDF tanpa lapisan teks tak terlihat dinilai digital walau bunyinya aneh", async () => {
+    const [b] = await db.select().from(schema.berkasSumber).where(eq(schema.berkasSumber.url, meta.url));
+    expect(b!.penilaianTeks).toBe("digital");
   });
 });

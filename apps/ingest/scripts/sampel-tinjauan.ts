@@ -1,5 +1,6 @@
 // Halaman tinjauan sebelum snapshot dibekukan: teks Pasal/Penjelasan dari database berdampingan dengan halaman PDF resminya.
 // Pakai: pnpm --filter @tahuhak/ingest exec tsx scripts/sampel-tinjauan.ts UU 13 2003 "1,156,193" 151
+// Pasal Lampiran diberi awalan L: scripts/sampel-tinjauan.ts UU 6 2023 "1,L1,L81,L186" 1
 // Hasil: .cache/tinjauan/<jenis>-<nomor>-<tahun>.html (buka di browser; PDF ikut disalin ke folder yang sama).
 import { copyFileSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -22,8 +23,13 @@ try {
   const namaPdf = `${jenis}-${nomor}-${tahun}.pdf`.toLowerCase();
   copyFileSync(berkas!.path, dir + namaPdf);
 
-  const ambil = async (n: string) => {
-    const [ps] = await db.select().from(schema.pasal).where(and(eq(schema.pasal.peraturanId, p.id), eq(schema.pasal.nomor, n)));
+  const ambil = async (kode: string) => {
+    const bagian = kode.startsWith("L") ? "lampiran" : "batang";
+    const n = kode.replace(/^L/, "");
+    const [ps] = await db
+      .select()
+      .from(schema.pasal)
+      .where(and(eq(schema.pasal.peraturanId, p.id), eq(schema.pasal.bagian, bagian), eq(schema.pasal.nomor, n)));
     const [v] = await db.select().from(schema.versiPasal).where(eq(schema.versiPasal.pasalId, ps!.id));
     const ayat = await db.select().from(schema.ayat).where(eq(schema.ayat.versiPasalId, v!.id)).orderBy(schema.ayat.urutan);
     const [pj] = await db.select().from(schema.penjelasan).where(eq(schema.penjelasan.versiPasalId, v!.id));
@@ -38,7 +44,7 @@ try {
   for (const n of daftarPasal.split(",").filter(Boolean)) {
     const { v, ayat } = await ambil(n);
     const isi = ayat.map((a) => `<p>${a.nomor ? `<b>(${a.nomor})</b> ` : ""}${esc(a.teks).replace(/\n/g, "<br>")}</p>`).join("");
-    kartu.push(panel(`Pasal ${n}`, v.halaman[0]!, `<p class="meta">Halaman tersimpan: ${v.halaman.join(", ")} · ${ayat.length} Ayat</p>${isi}`));
+    kartu.push(panel(v.rujukan, v.halaman[0]!, `<p class="meta">Halaman tersimpan: ${v.halaman.join(", ")} · ${ayat.length} Ayat</p>${isi}`));
   }
   if (pasalPenjelasan) {
     const { pj } = await ambil(pasalPenjelasan);

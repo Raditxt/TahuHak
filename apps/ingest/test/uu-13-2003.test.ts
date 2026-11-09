@@ -7,6 +7,7 @@ import { schema, type Db } from "@tahuhak/db";
 import { ingest } from "../src/ingest.ts";
 import { DIR_DATA_TES, dbTes, fetchTiruan, muatSumber, unduhFixture } from "./bantu.ts";
 import { bacaIsi } from "./isi-db.ts";
+import { cariBocor } from "./bocor.ts";
 
 const meta = muatSumber("uu-13-2003");
 let db: Db;
@@ -90,29 +91,10 @@ describe("ingest UU 13/2003", () => {
   });
 });
 
-// Gagasan cek-bocor dari prototype #2: sisa header, nomor halaman, footer, atau kata sambung di teks yang tersimpan.
-const POLA_BOCOR: [string, RegExp][] = [
-  ["header PRESIDEN", /(^|\n)PRESIDEN( REPUBLIK INDONESIA)?(\n|$)|\bREPUBLIK INDONESIA$/m],
-  ["nomor halaman", /(^|\s)[-_~]\s?\d{1,3}\s?[-_~](\s|$)/],
-  ["footer salinan", /SK\s*No\.?\s*\d{4,}/i],
-  ["kata sambung", /…|\.\.\.|(\.\s){2,}/],
-  ["SALINAN", /\bSALINAN\b/],
-  ["penutup Lembaran Negara", /TAMBAHAN LEMBARAN NEGARA/],
-];
-
 describe("cek-bocor UU 13/2003", () => {
   it("tidak ada header, nomor halaman, footer, atau kata sambung di teks Ayat dan Penjelasan", async () => {
-    const teks = [
-      ...(await db.select({ t: schema.ayat.teks }).from(schema.ayat)),
-      ...(await db.select({ t: schema.penjelasan.teks }).from(schema.penjelasan)),
-    ].map((r) => r.t);
-    expect(teks.length).toBeGreaterThan(193);
-    const temuan = teks.flatMap((t) =>
-      POLA_BOCOR.flatMap(([nama, re]) => {
-        const m = t.match(re);
-        return m ? [`${nama}: …${t.slice(Math.max(0, m.index! - 40), m.index! + 40)}…`] : [];
-      }),
-    );
+    const { jumlahTeks, temuan } = await cariBocor(db);
+    expect(jumlahTeks).toBeGreaterThan(193);
     expect(temuan).toEqual([]);
   });
 });

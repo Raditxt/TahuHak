@@ -1,8 +1,12 @@
-// Skema awal (issue #4): Peraturan, Berkas Sumber, Pasal, Versi Pasal, Ayat, Penjelasan, Catatan Tinjauan.
+// Skema Seam A (issue #4, #6): Peraturan, Berkas Sumber, Pasal, Versi Pasal, Ayat, Penjelasan, Catatan Tinjauan.
 // Istilah mengikuti GLOSSARY.md. Teks Pasal disimpan per Versi Pasal (ADR-0001), bukan di Pasal.
-import { boolean, integer, pgEnum, pgTable, serial, text, timestamp, unique } from "drizzle-orm/pg-core";
+import { boolean, integer, pgEnum, pgTable, real, serial, text, timestamp, unique } from "drizzle-orm/pg-core";
 
 export const asalTeks = pgEnum("asal_teks", ["digital", "ocr"]);
+/** digital: teks asli PDF. ocr-layak: lapisan OCR bawaan dipakai apa adanya. perlu-ocr: masuk antrean OCR laptop (ADR-0003). */
+export const penilaianTeks = pgEnum("penilaian_teks", ["digital", "ocr-layak", "perlu-ocr"]);
+/** batang: batang tubuh Peraturan. lampiran: Peraturan lain yang dilampirkan (Lampiran UU 6/2023 = teks Perppu 2/2022). */
+export const bagianPasal = pgEnum("bagian_pasal", ["batang", "lampiran"]);
 
 export const peraturan = pgTable(
   "peraturan",
@@ -27,6 +31,9 @@ export const berkasSumber = pgTable("berkas_sumber", {
   sha256: text("sha256").notNull().unique(),
   path: text("path").notNull(),
   ukuran: integer("ukuran").notNull(),
+  /** Hasil Detektor Asal Teks atas berkas ini. Null hanya untuk berkas yang diambil sebelum detektor ada (#6); ingest ulang mengisinya. */
+  penilaianTeks: penilaianTeks("penilaian_teks"),
+  kataAnehPer1000: real("kata_aneh_per_1000"),
 });
 
 /** Identitas Pasal di Peraturan tempatnya berada (mis. Pasal 156 UU 13/2003). Bunyinya ada di Versi Pasal. */
@@ -35,11 +42,12 @@ export const pasal = pgTable(
   {
     id: serial("id").primaryKey(),
     peraturanId: integer("peraturan_id").notNull().references(() => peraturan.id, { onDelete: "cascade" }),
+    bagian: bagianPasal("bagian").notNull().default("batang"),
     nomor: text("nomor").notNull(), // "156", "154A"
     urutan: integer("urutan").notNull(),
     sisipan: boolean("sisipan").notNull().default(false),
   },
-  (t) => [unique().on(t.peraturanId, t.nomor)],
+  (t) => [unique().on(t.peraturanId, t.bagian, t.nomor)],
 );
 
 /** Bunyi Pasal persis seperti di satu Peraturan sumber. Untuk bunyi asli, sumbernya Peraturan itu sendiri. */
@@ -73,7 +81,13 @@ export const penjelasan = pgTable("penjelasan", {
   teks: text("teks").notNull(),
 });
 
-export const jenisTinjauan = pgEnum("jenis_tinjauan", ["pasal-loncat", "ayat-tidak-urut", "penjelasan-tak-tertaut"]);
+export const jenisTinjauan = pgEnum("jenis_tinjauan", [
+  "pasal-loncat",
+  "ayat-tidak-urut",
+  "penjelasan-tak-tertaut",
+  "penjelasan-tidak-ditemukan",
+  "judul-pasal-ditebak",
+]);
 
 /** Hasil parse janggal yang perlu ditinjau manual. */
 export const catatanTinjauan = pgTable("catatan_tinjauan", {

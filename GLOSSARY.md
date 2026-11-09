@@ -15,6 +15,9 @@ _Avoid_: artikel, ketentuan
 **Pasal Sisipan**:
 Pasal bernomor dengan huruf (mis. Pasal 5A) yang disisipkan ke sebuah Peraturan oleh Peraturan Pengubah.
 
+**Lampiran**:
+Bagian resmi yang dilampirkan pada sebuah Peraturan dan tidak terpisahkan darinya. Lampiran bisa memuat Peraturan lain secara utuh: Lampiran UU 6/2023 adalah teks Perppu 2/2022. Pasal di Lampiran disimpan sebagai Pasal milik Peraturan itu, dengan rujukan "Lampiran, Pasal N".
+
 **Asal Teks**:
 Cara teks sebuah Pasal diperoleh: **digital** (dari lapisan teks PDF resmi) atau **OCR** (dibaca mesin dari hasil scan, mungkin ada salah baca). Teks OCR selalu disertai tautan ke PDF resmi.
 

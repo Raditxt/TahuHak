@@ -66,9 +66,3 @@ export async function ekstrak(pdf: Uint8Array): Promise<Halaman[]> {
   }
   return hasil;
 }
-
-/** Asal Teks per dokumen: lapisan teks tak terlihat di ≥ 50% halaman berarti hasil OCR. */
-export function asalTeks(halaman: Halaman[]): "digital" | "ocr" {
-  const ocr = halaman.filter((h) => h.teksTakTerlihat).length;
-  return ocr >= halaman.length / 2 ? "ocr" : "digital";
-}
