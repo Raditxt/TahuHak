@@ -32,20 +32,24 @@ beforeAll(async () => {
     ],
   ]);
   const pdfPengubah = await buatPdf([
-    ["UNDANG-UNDANG REPUBLIK INDONESIA", "Pasal 1", "Lampiran merupakan bagian tidak terpisahkan dari Undang-Undang ini.", "Pasal 2", "Undang-Undang ini mulai berlaku."],
+    ["UNDANG-UNDANG REPUBLIK INDONESIA", "Pasal 1", "Lampiran merupakan bagian tidak terpisahkan dari", "Undang-Undang ini.", "Pasal 2", "Undang-Undang ini mulai berlaku."],
     [
       "LAMPIRAN",
       "UNDANG-UNDANG REPUBLIK INDONESIA",
       "Pasal 1",
-      "Beberapa ketentuan dalam Undang-Undang Nomor 99 Tahun 2098 tentang Tes Sasaran diubah sebagai berikut:",
+      // Baris panjang dipotong seperti di PDF asli; teks yang melewati lebar halaman terpotong.
+      "Beberapa ketentuan dalam Undang-Undang Nomor 99 Tahun 2098 tentang Tes Sasaran",
+      "diubah sebagai berikut:",
       "1. Ketentuan ayat (2) Pasal 1 diubah sehingga berbunyi sebagai berikut:",
       "(2) Ayat dua Pasal 1 baru.",
       "2. Ketentuan ayat (3) Pasal 1 dihapus.",
-      "3. Di antara ayat (1) dan ayat (2) Pasal 2 disisipkan 1 (satu) ayat, yakni ayat (1a) sehingga berbunyi sebagai berikut:",
+      "3. Di antara ayat (1) dan ayat (2) Pasal 2 disisipkan 1 (satu) ayat, yakni ayat (1a)",
+      "sehingga berbunyi sebagai berikut:",
       "(1a) Ayat sisipan Pasal 2.",
       "4. Pasal 3 dihapus.",
       "Pasal 2",
-      "Beberapa ketentuan dalam Undang-Undang Nomor 97 Tahun 2098 tentang Belum Diingest diubah sebagai berikut:",
+      "Beberapa ketentuan dalam Undang-Undang Nomor 97 Tahun 2098 tentang Belum Diingest",
+      "diubah sebagai berikut:",
       "1. Ketentuan Pasal 5 diubah sehingga berbunyi sebagai berikut:",
       "Pasal 5",
       "Bunyi baru Pasal 5.",

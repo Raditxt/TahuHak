@@ -1,7 +1,7 @@
 // Seam A: UU 13/2003 lalu UU 6/2023 → Parser Perubahan menerapkan Pasal 81 Lampiran UU 6/2023 ke UU 13/2003 (#7, ADR-0001).
 // Tes hanya membaca database, tidak memanggil fungsi parser.
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { and, asc, eq, inArray } from "drizzle-orm";
+import { and, asc, eq, inArray, isNotNull } from "drizzle-orm";
 import { schema, type Db } from "@tahuhak/db";
 import { ingest, type SumberMeta } from "../src/ingest.ts";
 import { DIR_DATA_TES, dbTes, fetchTiruan, muatSumber, unduhFixture } from "./bantu.ts";
@@ -119,7 +119,10 @@ describe("Parser Perubahan: Pasal 81 Lampiran UU 6/2023 → UU 13/2003", () => {
       const c = catatan.find((x) => x.versiPasalId === v.id);
       expect(c, v.rujukan).toBeDefined();
       expect(c!.rujukan).toBe(v.rujukan);
-      expect(c!.ayatTerdampak.length, v.rujukan).toBeGreaterThan(0);
+      // Pasal tanpa Ayat bernomor (mis. Pasal 49, angka 11) tidak punya nomor Ayat untuk ditunjuk.
+      const bernomor = await db.$count(s.ayat, and(eq(s.ayat.versiPasalId, v.id), isNotNull(s.ayat.nomor)));
+      if (bernomor) expect(c!.ayatTerdampak.length, v.rujukan).toBeGreaterThan(0);
+      else expect(c!.ayatTerdampak, v.rujukan).toEqual([]);
     }
   });
 
@@ -144,6 +147,19 @@ describe("Parser Perubahan: Pasal 81 Lampiran UU 6/2023 → UU 13/2003", () => {
     expect(p.catatan).toEqual([
       expect.objectContaining({ jenis: "hapus", cakupan: "pasal-utuh", versiPasalId: null, rujukan: "Lampiran, Pasal 81 angka 46", ayatTerdampak: ["1", "2", "3"] }),
     ]);
+  });
+
+  it("angka 37 dan 38 yang menempel di akhir angka 36 (OCR tanpa baris baru) tercatat sendiri-sendiri", async () => {
+    // Teks OCR: "... pemegang hak jaminan kebendaan. 37 Pasal 96 dihapus. 38 Pasal 97 dihapus."
+    for (const [nomor, angka] of [["96", 37], ["97", 38]] as const) {
+      const p = (await pasal13(nomor))!;
+      expect(p.catatan).toEqual([expect.objectContaining({ jenis: "hapus", cakupan: "pasal-utuh", rujukan: `Lampiran, Pasal 81 angka ${angka}` })]);
+    }
+    const v95 = (await versiDari6("95"))!;
+    expect(v95.rujukan).toBe("Lampiran, Pasal 81 angka 36");
+    expect(v95.ayat.map((a) => a.nomor)).toEqual(["1", "2", "3"]);
+    expect(v95.ayat[2]!.teks).toMatch(/kecuali para kreditur pemegang hak jaminan kebendaan\.$/);
+    expect(v95.ayat.map((a) => a.teks).join("\n")).not.toMatch(/Pasal 9[67] dihapus/);
   });
 
   it("70 dari 71 angka Pasal 81 dikenali; angka 21 (judul Paragraf) ada di antrean tinjauan manual", async () => {

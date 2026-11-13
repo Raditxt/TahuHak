@@ -23,7 +23,9 @@ try {
   } else {
     console.log(`  ${r.pasal} Pasal, ${r.penjelasan} Penjelasan tertaut, ${r.tinjauan.length} perlu tinjauan`);
     for (const t of r.tinjauan) console.log(`  perlu tinjauan: ${t}`);
+    for (const d of r.perubahanDilewati) console.log(`  perubahan dilewati: ${d}`);
   }
+  for (const p of r.peringatan) console.log(`\n⚠ PERINGATAN: ${p}`);
 } finally {
   await tutup();
 }

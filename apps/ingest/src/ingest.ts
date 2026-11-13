@@ -1,11 +1,12 @@
 // Seam A: satu Peraturan dari sumber → isi database. Aman dijalankan ulang: baris di-upsert menurut kunci alaminya.
-import { and, eq, inArray, notInArray, sql } from "drizzle-orm";
+import { and, eq, inArray, ne, notInArray, sql } from "drizzle-orm";
 import { schema, type Db } from "@tahuhak/db";
 import { ambilPdf } from "./ambil.ts";
 import { ekstrak } from "./ekstrak.ts";
 import { bersihkan } from "./bersih.ts";
 import { nilaiMutu, type PenilaianTeks } from "./mutu.ts";
 import { parseStruktur, type Bagian } from "./struktur.ts";
+import { JARAK_URUTAN, bersihkanPenerapan, peringatanBelumDiterapkan, terapkanPengubah } from "./terapkan.ts";
 
 export type SumberMeta = { id: string; jenis: string; nomor: string; tahun: number; judul: string; url: string; halamanDetail?: string };
 export type OpsiIngest = { db: Db; fetch?: typeof fetch; dirData?: string; jedaMs?: [number, number] };
@@ -33,6 +34,8 @@ export async function ingest(meta: SumberMeta, opsi: OpsiIngest): Promise<Ringka
   // Lapisan OCR yang tidak layak tidak diurai: berkasnya masuk antrean OCR laptop (ADR-0003), Pasal lama dibiarkan.
   const struktur = mutu.penilaian === "perlu-ocr" ? null : parseStruktur(baris);
   const s = schema;
+  const perubahanDilewati: string[] = [];
+  const peringatan: string[] = [];
 
   await opsi.db.transaction(async (tx) => {
     const [p] = await tx
@@ -61,8 +64,10 @@ export async function ingest(meta: SumberMeta, opsi: OpsiIngest): Promise<Ringka
         set: { diambilPada: berkas.diambilPada, url: berkas.url, path: berkas.path, penilaianTeks: mutu.penilaian, kataAnehPer1000: mutu.kataAnehPer1000 },
       });
     if (!struktur) return;
+    await bersihkanPenerapan(tx, peraturanId);
 
-    // Pasal yang tidak lagi ditemukan di hasil parse dibuang; yang ada di-upsert.
+    // Pasal yang tidak lagi ditemukan di hasil parse dibuang; yang ada di-upsert. Pasal yang punya Versi Pasal dari
+    // Peraturan Pengubah (mis. Pasal Sisipan 154A dari UU 6/2023) tidak dibuang: asalnya bukan hasil parse Peraturan ini.
     const kunciBaru = struktur.pasal.map((x) => kunci(x.bagian, x.nomor));
     await tx
       .delete(s.pasal)
@@ -70,6 +75,7 @@ export async function ingest(meta: SumberMeta, opsi: OpsiIngest): Promise<Ringka
         and(
           eq(s.pasal.peraturanId, peraturanId),
           kunciBaru.length ? notInArray(sql<string>`${s.pasal.bagian} || ':' || ${s.pasal.nomor}`, kunciBaru) : sql`true`,
+          notInArray(s.pasal.id, tx.select({ id: s.versiPasal.pasalId }).from(s.versiPasal).where(ne(s.versiPasal.sumberPeraturanId, peraturanId))),
         ),
       );
     await tx.delete(s.catatanTinjauan).where(eq(s.catatanTinjauan.peraturanId, peraturanId));
@@ -80,8 +86,8 @@ export async function ingest(meta: SumberMeta, opsi: OpsiIngest): Promise<Ringka
       const k = kunci(x.bagian, x.nomor);
       const [ps] = await tx
         .insert(s.pasal)
-        .values({ peraturanId, bagian: x.bagian, nomor: x.nomor, urutan: i + 1, sisipan: /[A-Z]$/.test(x.nomor) })
-        .onConflictDoUpdate({ target: [s.pasal.peraturanId, s.pasal.bagian, s.pasal.nomor], set: { urutan: i + 1 } })
+        .values({ peraturanId, bagian: x.bagian, nomor: x.nomor, urutan: (i + 1) * JARAK_URUTAN, sisipan: /[A-Z]$/.test(x.nomor) })
+        .onConflictDoUpdate({ target: [s.pasal.peraturanId, s.pasal.bagian, s.pasal.nomor], set: { urutan: (i + 1) * JARAK_URUTAN } })
         .returning();
       const nilaiVersi = { rujukan: rujukan(x.bagian, x.nomor), halaman: x.halaman, asalTeks: asal, perluTinjauan: janggal.has(k) };
       const [v] = await tx
@@ -115,6 +121,20 @@ export async function ingest(meta: SumberMeta, opsi: OpsiIngest): Promise<Ringka
         })),
       );
     }
+
+    // Parser Perubahan: Pasal pengubah di Peraturan ini diterapkan ke Peraturan sasarannya.
+    for (const x of struktur.pasal) {
+      if (!x.isiPengubah) continue;
+      const r = await terapkanPengubah(tx, {
+        pengubahId: peraturanId,
+        rujukanPasal: rujukan(x.bagian, x.nomor),
+        versiPengubahId: versiPerNomor.get(kunci(x.bagian, x.nomor)) ?? null,
+        isi: x.isiPengubah,
+        asal,
+      });
+      perubahanDilewati.push(...r.dilewati);
+    }
+    peringatan.push(...(await peringatanBelumDiterapkan(tx, { id: peraturanId, jenis: meta.jenis, nomor: meta.nomor, tahun: meta.tahun })));
   });
 
   return {
@@ -123,7 +143,7 @@ export async function ingest(meta: SumberMeta, opsi: OpsiIngest): Promise<Ringka
     pasal: struktur?.pasal.length ?? 0,
     penjelasan: struktur?.pasal.filter((x) => x.penjelasan !== undefined).length ?? 0,
     tinjauan: struktur?.tinjauan.map((t) => t.pesan) ?? [],
-    perubahanDilewati: [],
-    peringatan: [],
+    perubahanDilewati,
+    peringatan,
   };
 }
