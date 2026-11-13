@@ -3,7 +3,7 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { and, eq } from "drizzle-orm";
 import { schema, type Db } from "@tahuhak/db";
-import { ingest } from "../src/ingest.ts";
+import { ingest, type RingkasanIngest } from "../src/ingest.ts";
 import { DIR_DATA_TES, dbTes, fetchTiruan, muatSumber, unduhFixture } from "./bantu.ts";
 import { bacaIsi } from "./isi-db.ts";
 import { cariBocor } from "./bocor.ts";
@@ -12,11 +12,12 @@ const meta = muatSumber("uu-6-2023");
 let db: Db;
 let tutup: () => Promise<void>;
 let pdf: Uint8Array;
+let ringkasan: RingkasanIngest;
 
 beforeAll(async () => {
   pdf = await unduhFixture(meta);
   ({ db, tutup } = await dbTes());
-  await jalankan();
+  ringkasan = await jalankan();
 });
 const jalankan = () => ingest(meta, { db, fetch: fetchTiruan({ [meta.url]: pdf }), dirData: DIR_DATA_TES, jedaMs: [0, 0] });
 afterAll(() => tutup?.());
@@ -84,6 +85,14 @@ describe("ingest UU 6/2023", () => {
     expect((await versiPasal("lampiran", "133")).versi.perluTinjauan).toBe(true);
     expect((await versiPasal("lampiran", "138")).versi.perluTinjauan).toBe(true);
     expect((await versiPasal("lampiran", "81")).versi.perluTinjauan).toBe(false);
+  });
+});
+
+describe("Parser Perubahan tanpa UU 13/2003 di database", () => {
+  it("melewati Pasal 81 Lampiran dan mencatatnya di ringkasan ingest, tanpa Catatan Perubahan atau relasi", async () => {
+    expect(ringkasan.perubahanDilewati).toContainEqual(expect.stringMatching(/^Lampiran, Pasal 81: UU 13\/2003 belum diingest/));
+    expect(await db.$count(schema.catatanPerubahan)).toBe(0);
+    expect(await db.$count(schema.relasiPeraturan)).toBe(0);
   });
 });
 

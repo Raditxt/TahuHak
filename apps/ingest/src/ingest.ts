@@ -9,7 +9,12 @@ import { parseStruktur, type Bagian } from "./struktur.ts";
 
 export type SumberMeta = { id: string; jenis: string; nomor: string; tahun: number; judul: string; url: string; halamanDetail?: string };
 export type OpsiIngest = { db: Db; fetch?: typeof fetch; dirData?: string; jedaMs?: [number, number] };
-export type RingkasanIngest = { penilaian: PenilaianTeks; kataAnehPer1000: number; pasal: number; penjelasan: number; tinjauan: string[] };
+export type RingkasanIngest = { penilaian: PenilaianTeks; kataAnehPer1000: number; pasal: number; penjelasan: number; tinjauan: string[];
+  /** Pasal pengubah yang dilewati karena Peraturan sasarannya belum diingest, mis. "Lampiran, Pasal 81: UU 13/2003 belum diingest". */
+  perubahanDilewati: string[];
+  /** Peringatan untuk pengembang, mis. Peraturan Pengubah yang sudah diingest tetapi belum diterapkan ke Peraturan ini. */
+  peringatan: string[];
+};
 
 const kunci = (bagian: Bagian, nomor: string) => `${bagian}:${nomor}`;
 /** Rujukan Versi Pasal ke tempatnya di Peraturan sumber: "Pasal 156" atau "Lampiran, Pasal 81". */
@@ -118,5 +123,7 @@ export async function ingest(meta: SumberMeta, opsi: OpsiIngest): Promise<Ringka
     pasal: struktur?.pasal.length ?? 0,
     penjelasan: struktur?.pasal.filter((x) => x.penjelasan !== undefined).length ?? 0,
     tinjauan: struktur?.tinjauan.map((t) => t.pesan) ?? [],
+    perubahanDilewati: [],
+    peringatan: [],
   };
 }

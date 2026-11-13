@@ -1,26 +1,13 @@
 // Seam A: hasil parse janggal ditandai perlu tinjauan di database.
 // UU 13/2003 tidak punya keanehan, jadi dipakai PDF kecil buatan tes yang sengaja janggal.
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { PDFDocument, StandardFonts, setTextRenderingMode, TextRenderingMode } from "pdf-lib";
 import { eq } from "drizzle-orm";
 import { schema, type Db } from "@tahuhak/db";
 import { ingest, type SumberMeta } from "../src/ingest.ts";
-import { DIR_DATA_TES, dbTes, fetchTiruan } from "./bantu.ts";
+import { DIR_DATA_TES, buatPdf, dbTes, fetchTiruan } from "./bantu.ts";
 import { bacaIsi, type IsiDb } from "./isi-db.ts";
 
 const meta: SumberMeta = { id: "tes-janggal", jenis: "UU", nomor: "99", tahun: 2099, judul: "Tes Janggal", url: "https://contoh.test/janggal.pdf" };
-
-/** `scan`: teks digambar tak terlihat (render mode 3), seperti lapisan OCR di atas gambar hasil scan. */
-async function buatPdf(halaman: string[][], scan = false): Promise<Uint8Array> {
-  const doc = await PDFDocument.create();
-  const font = await doc.embedFont(StandardFonts.Helvetica);
-  for (const baris of halaman) {
-    const page = doc.addPage([595, 842]);
-    if (scan) page.pushOperators(setTextRenderingMode(TextRenderingMode.Invisible));
-    baris.forEach((t, i) => page.drawText(t, { x: 72, y: 780 - i * 18, size: 11, font }));
-  }
-  return doc.save();
-}
 
 let db: Db;
 let tutup: () => Promise<void>;
