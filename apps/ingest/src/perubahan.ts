@@ -250,6 +250,23 @@ function judulKutipan(l: string): { nomor: string; sisa: string } | null {
   return n ? { nomor: n, sisa: m[3] ?? "" } : null;
 }
 
+/**
+ * Potong satu baris menjadi kepala `teks[0, akhirKepala)` dan ekor `teks[mulaiEkor..]`, masing-masing hanya membawa halaman yang dilaluinya.
+ * Tanpa posisi halaman (`mulai`), keduanya mewarisi semua halaman baris asal.
+ */
+function potongBaris(b: BarisHal, akhirKepala: number, mulaiEkor: number): [BarisHal, BarisHal] {
+  const kepala = b.teks.slice(0, akhirKepala);
+  const ekor = b.teks.slice(mulaiEkor);
+  if (!b.mulai || b.mulai.length !== b.halaman.length) return [{ teks: kepala, halaman: b.halaman }, { teks: ekor, halaman: b.halaman }];
+  const hal = b.halaman.map((h, k) => ({ h, dari: b.mulai![k]!, sampai: b.mulai![k + 1] ?? Infinity }));
+  const kk = hal.filter((x) => x.dari < akhirKepala);
+  const ke = hal.filter((x) => x.sampai > mulaiEkor);
+  return [
+    { teks: kepala, halaman: kk.map((x) => x.h), mulai: kk.map((x) => x.dari) },
+    { teks: ekor, halaman: ke.map((x) => x.h), mulai: ke.map((x) => Math.max(0, x.dari - mulaiEkor)) },
+  ];
+}
+
 /** Isi Pasal pengubah (per baris) → Peraturan sasaran, rencana perubahan per Pasal, dan angka yang perlu tinjauan manual. */
 export function uraiPengubah(isi: BarisHal[], rujukanPasal: string): HasilUrai {
   const tinjauan: HasilUrai["tinjauan"] = [];
@@ -280,8 +297,9 @@ export function uraiPengubah(isi: BarisHal[], rujukanPasal: string): HasilUrai {
     const nomor = loncat ?? (nomorAngka(b.teks, harap) ? harap : null);
     const t = angka.length || nomor ? tempel(b.teks, nomor ? nomor + 1 : harap) : null;
     if (t) {
-      antre.unshift({ teks: t[2]!, halaman: b.halaman });
-      b = { teks: t[1]!, halaman: b.halaman };
+      const [kepala, ekor] = potongBaris(b, t[1]!.length, b.teks.length - t[2]!.length);
+      antre.unshift(ekor);
+      b = kepala;
     }
     if (nomor) angka.push({ nomor, baris: [b], ...(loncat ? { diharapkan: harap } : {}) });
     else angka.at(-1)?.baris.push(b);

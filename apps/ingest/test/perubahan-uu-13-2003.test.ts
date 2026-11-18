@@ -5,6 +5,7 @@ import { and, asc, eq, inArray, isNotNull } from "drizzle-orm";
 import { schema, type Db } from "@tahuhak/db";
 import { ingest, type SumberMeta } from "../src/ingest.ts";
 import { DIR_DATA_TES, dbTes, fetchTiruan, muatSumber, unduhFixture } from "./bantu.ts";
+import { bacaIsi } from "./isi-db.ts";
 
 const s = schema;
 const uu13 = muatSumber("uu-13-2003");
@@ -151,12 +152,16 @@ describe("Parser Perubahan: Pasal 81 Lampiran UU 6/2023 → UU 13/2003", () => {
 
   it("angka 37 dan 38 yang menempel di akhir angka 36 (OCR tanpa baris baru) tercatat sendiri-sendiri", async () => {
     // Teks OCR: "... pemegang hak jaminan kebendaan. 37 Pasal 96 dihapus. 38 Pasal 97 dihapus."
+    // Baris itu melewati pergantian halaman: angka 36 berakhir di hal. PDF 565, angka 37 dan 38 ada di hal. PDF 566 (dicek ke PDF).
     for (const [nomor, angka] of [["96", 37], ["97", 38]] as const) {
       const p = (await pasal13(nomor))!;
-      expect(p.catatan).toEqual([expect.objectContaining({ jenis: "hapus", cakupan: "pasal-utuh", rujukan: `Lampiran, Pasal 81 angka ${angka}` })]);
+      expect(p.catatan).toEqual([
+        expect.objectContaining({ jenis: "hapus", cakupan: "pasal-utuh", rujukan: `Lampiran, Pasal 81 angka ${angka}`, halaman: [566] }),
+      ]);
     }
     const v95 = (await versiDari6("95"))!;
     expect(v95.rujukan).toBe("Lampiran, Pasal 81 angka 36");
+    expect(v95.halaman).toEqual([565]);
     expect(v95.ayat.map((a) => a.nomor)).toEqual(["1", "2", "3"]);
     expect(v95.ayat[2]!.teks).toMatch(/kecuali para kreditur pemegang hak jaminan kebendaan\.$/);
     expect(v95.ayat.map((a) => a.teks).join("\n")).not.toMatch(/Pasal 9[67] dihapus/);
@@ -198,6 +203,15 @@ describe("Parser Perubahan: Pasal 81 Lampiran UU 6/2023 → UU 13/2003", () => {
     const v156 = (await versiDari6("156"))!;
     expect(v156.ayat[4]!.teks).toContain("ayat (21, ayat (3)");
     expect(ragu.filter((t) => t.versiPasalId === v156.id).map((t) => t.pesan)).toContainEqual(expect.stringContaining("(21,"));
+  });
+});
+
+describe("snapshot Seam A UU 13/2003 setelah diubah UU 6/2023", () => {
+  // Bila snapshot berubah, tinjau ulang dengan scripts/sampel-tinjauan.ts (semua Versi Pasal, berdampingan dengan PDF sumbernya)
+  // sebelum memperbaruinya (vitest -u).
+  it("isi database UU 13/2003 beserta Versi Pasal, Catatan Perubahan, dan Relasi Peraturan sama dengan snapshot yang sudah ditinjau", async () => {
+    const isi = await bacaIsi(db, "UU", "13", 2003, { perubahan: true });
+    await expect(JSON.stringify(isi, null, 2) + "\n").toMatchFileSnapshot("__snapshots__/uu-13-2003-diubah.isi.json");
   });
 });
 

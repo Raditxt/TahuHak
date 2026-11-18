@@ -7,7 +7,12 @@ import { bacaJudul, normalNomor } from "./nomor-ocr.ts";
 export type Bagian = "batang" | "lampiran";
 export type AyatHasil = { nomor: string | null; teks: string };
 /** Satu baris teks hasil penyambungan beserta halaman yang dilaluinya. */
-export type BarisHal = { teks: string; halaman: number[] };
+export type BarisHal = {
+  teks: string;
+  halaman: number[];
+  /** Posisi karakter di `teks` tempat tiap halaman mulai (sejajar dengan `halaman`), untuk memotong baris yang melewati pergantian halaman. */
+  mulai?: number[];
+};
 export type PasalHasil = {
   bagian: Bagian;
   nomor: string;
@@ -170,10 +175,13 @@ export function sambungBarisHal(lines: string[], hal: number[], pisah?: RegExp):
     const h = hal[i];
     const cur = out.at(-1);
     if (!cur || BUTIR.test(l) || (pisah?.test(l) && !/\bayat$/.test(cur.teks))) {
-      out.push({ teks: l, halaman: h === undefined ? [] : [h] });
+      out.push({ teks: l, halaman: h === undefined ? [] : [h], mulai: h === undefined ? [] : [0] });
       continue;
     }
-    if (h !== undefined && !cur.halaman.includes(h)) cur.halaman.push(h);
+    if (h !== undefined && !cur.halaman.includes(h)) {
+      cur.halaman.push(h);
+      cur.mulai?.push(cur.teks.length + 1);
+    }
     if (/\p{Ll}-$/u.test(cur.teks) && /^\p{Ll}/u.test(l)) {
       // "mem-" + "buat" → "membuat"; kata ulang "terputus-" + "putus" tetap berstrip.
       const depan = cur.teks.match(/(\p{L}+)-$/u)![1]!;
