@@ -173,7 +173,8 @@ describe("Parser Perubahan: Pasal 81 Lampiran UU 6/2023 → UU 13/2003", () => {
       .select()
       .from(s.catatanTinjauan)
       .where(and(eq(s.catatanTinjauan.peraturanId, id6), inArray(s.catatanTinjauan.jenis, ["perubahan-tak-dikenali", "angka-tidak-urut", "judul-isi-beda", "sisip-bab", "penjelasan-diubah"])));
-    expect(tinjauan.map((t) => [t.jenis, t.pesan.match(/^Lampiran, Pasal 81 angka \d+/)?.[0]])).toEqual([["perubahan-tak-dikenali", "Lampiran, Pasal 81 angka 21"]]);
+    const pasal81 = tinjauan.filter((t) => t.pesan.startsWith("Lampiran, Pasal 81 "));
+    expect(pasal81.map((t) => [t.jenis, t.pesan.match(/^Lampiran, Pasal 81 angka \d+/)?.[0]])).toEqual([["perubahan-tak-dikenali", "Lampiran, Pasal 81 angka 21"]]);
   });
 
   it("Ayat (5) Pasal 160 tetap di Pasal 160, tidak masuk ke Pasal 185", async () => {

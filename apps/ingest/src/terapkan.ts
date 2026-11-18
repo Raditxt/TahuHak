@@ -65,7 +65,15 @@ export async function terapkanPengubah(
     .select()
     .from(s.peraturan)
     .where(and(eq(s.peraturan.jenis, sx.jenis), eq(s.peraturan.nomor, sx.nomor), eq(s.peraturan.tahun, sx.tahun)));
-  if (!sasaran) return { dilewati: [`${o.rujukanPasal}: ${namaPeraturan(sx)} belum diingest`] };
+  if (!sasaran) {
+    // Sisip BAB tetap dicatat walau sasarannya belum diingest: Pasal yang disisipkannya tidak tercatat di tempat lain.
+    // Jenis tinjauan lain akan muncul lagi saat sasaran diingest dan Peraturan Pengubah diingest ulang.
+    const sisipBab = urai.tinjauan.filter((t) => t.jenis === "sisip-bab");
+    if (sisipBab.length) {
+      await tx.insert(s.catatanTinjauan).values(sisipBab.map((t) => ({ peraturanId: o.pengubahId, versiPasalId: o.versiPengubahId, jenis: t.jenis, pesan: t.pesan })));
+    }
+    return { dilewati: [`${o.rujukanPasal}: ${namaPeraturan(sx)} belum diingest`] };
+  }
   if (sasaran.id === o.pengubahId) return { dilewati: [] };
 
   await tx

@@ -8,7 +8,7 @@ import { DIR_DATA_TES, buatPdf, dbTes, fetchTiruan } from "./bantu.ts";
 
 const s = schema;
 const sasaran: SumberMeta = { id: "tes-sasaran", jenis: "UU", nomor: "99", tahun: 2098, judul: "Tes Sasaran", url: "https://contoh.test/sasaran.pdf" };
-const belum: SumberMeta = { id: "tes-belum", jenis: "UU", nomor: "97", tahun: 2098, judul: "Belum Diingest", url: "https://contoh.test/belum.pdf" };
+const belum: SumberMeta = { id: "tes-belum", jenis: "UU", nomor: "97", tahun: 2011, judul: "Belum Diingest", url: "https://contoh.test/belum.pdf" };
 const pengubah: SumberMeta = { id: "tes-pengubah", jenis: "UU", nomor: "98", tahun: 2098, judul: "Tes Pengubah", url: "https://contoh.test/pengubah.pdf" };
 
 let db: Db;
@@ -29,6 +29,18 @@ beforeAll(async () => {
       "(2) Ayat dua Pasal 2.",
       "Pasal 3",
       "Pasal tiga lama.",
+      "Pasal 4",
+      "Pasal empat lama.",
+      "Pasal 5",
+      "Pasal lima lama.",
+      "Pasal 6",
+      "Pasal enam lama.",
+      "Pasal 7",
+      "Pasal tujuh lama.",
+      "Pasal 8",
+      "Pasal delapan lama.",
+      "Pasal 9",
+      "Pasal sembilan lama.",
     ],
   ]);
   const pdfPengubah = await buatPdf([
@@ -47,12 +59,28 @@ beforeAll(async () => {
       "sehingga berbunyi sebagai berikut:",
       "(1a) Ayat sisipan Pasal 2.",
       "4. Pasal 3 dihapus.",
+      // Angka 5 hilang (rusak OCR): angka 6 loncat.
+      "6. Ketentuan Pasal 4 diubah sehingga berbunyi sebagai berikut:",
+      "Pasal 4",
+      "Pasal empat baru.",
+      "7. Pasal 5 dihapus.",
+      "8. Pasal 6 dihapus.",
+      "9. Pasal 7 dihapus.",
+      "10. Ketentuan Pasal 8 diubah sehingga berbunyi sebagai berikut:",
+      "Pasal 8",
+      // OCR menelan pergantian baris dan membaca "11." sebagai "t1.".
+      "Pasal delapan baru. t1. Pasal 9 dihapus.",
       "Pasal 2",
-      "Beberapa ketentuan dalam Undang-Undang Nomor 97 Tahun 2098 tentang Belum Diingest",
+      // Tahun rusak OCR seperti di Lampiran UU 6/2023 Pasal 50 ("2OLl" = 2011).
+      "Beberapa ketentuan dalam Undang-Undang Nomor 97 Tahun 2OLl tentang Belum Diingest",
       "diubah sebagai berikut:",
       "1. Ketentuan Pasal 5 diubah sehingga berbunyi sebagai berikut:",
       "Pasal 5",
       "Bunyi baru Pasal 5.",
+      "2. Di antara BAB I dan BAB II disisipkan 1 (satu) bab dan 1 (satu) pasal,",
+      "yakni BAB IA dan Pasal 5A sehingga berbunyi sebagai berikut:",
+      "Pasal 5A",
+      "Bunyi Pasal 5A.",
       "Pasal 3",
       "Peraturan ini mulai berlaku.",
     ],
@@ -119,11 +147,49 @@ describe("perubahan Ayat saja", () => {
   });
 });
 
+describe("angka perubahan tak berurutan", () => {
+  it("angka yang loncat masuk antrean tinjauan manual dan tidak diterapkan; angka sesudahnya tetap diterapkan dengan nomor aslinya", async () => {
+    const [p] = await db.select().from(s.peraturan).where(and(eq(s.peraturan.nomor, "98"), eq(s.peraturan.tahun, 2098)));
+    const tinjauan = await db
+      .select()
+      .from(s.catatanTinjauan)
+      .where(and(eq(s.catatanTinjauan.peraturanId, p!.id), eq(s.catatanTinjauan.jenis, "angka-tidak-urut")));
+    expect(tinjauan.map((t) => t.pesan)).toEqual([expect.stringMatching(/^Lampiran, Pasal 1 angka 6: .*diharapkan angka 5/)]);
+    const p4 = await pasalSasaran("4");
+    expect(p4.versi).toHaveLength(1);
+    expect(p4.catatan).toEqual([]);
+    // Bunyi angka 6 tidak tertelan ke angka sebelumnya.
+    expect((await pasalSasaran("3")).catatan).toEqual([expect.objectContaining({ rujukan: "Lampiran, Pasal 1 angka 4" })]);
+    expect((await pasalSasaran("5")).catatan).toEqual([
+      { rujukan: "Lampiran, Pasal 1 angka 7", jenis: "hapus", cakupan: "pasal-utuh", versiPasalId: null, ayatTerdampak: [], ayatBaru: [] },
+    ]);
+  });
+});
+
+describe("angka perubahan yang menempel di akhir angka sebelumnya", () => {
+  it("nomor angka rusak OCR (\"t1.\" = 11) tetap dikenali bila cocok dengan angka yang diharapkan", async () => {
+    const p8 = await pasalSasaran("8");
+    expect(p8.ayat.at(-1)).toEqual({ nomor: null, teks: "Pasal delapan baru." });
+    expect((await pasalSasaran("9")).catatan).toEqual([
+      { rujukan: "Lampiran, Pasal 1 angka 11", jenis: "hapus", cakupan: "pasal-utuh", versiPasalId: null, ayatTerdampak: [], ayatBaru: [] },
+    ]);
+  });
+});
+
 describe("Pasal pengubah yang menyasar Peraturan yang belum diingest", () => {
   it("dilewati dan dicatat di ringkasan ingest; relasi hanya ke Peraturan yang ada", async () => {
-    expect(ringkasan.perubahanDilewati).toEqual([expect.stringMatching(/^Lampiran, Pasal 2: UU 97\/2098 belum diingest/)]);
+    expect(ringkasan.perubahanDilewati).toEqual([expect.stringMatching(/^Lampiran, Pasal 2: UU 97\/2011 belum diingest/)]);
     expect(await db.$count(s.relasiPeraturan)).toBe(1);
-    expect(await db.$count(s.catatanPerubahan)).toBe(4);
+    expect(await db.$count(s.catatanPerubahan)).toBe(9);
+  });
+
+  it("sisip BAB sekaligus Pasal tetap masuk antrean tinjauan manual walau sasarannya belum diingest", async () => {
+    const [p] = await db.select().from(s.peraturan).where(and(eq(s.peraturan.nomor, "98"), eq(s.peraturan.tahun, 2098)));
+    const tinjauan = await db
+      .select()
+      .from(s.catatanTinjauan)
+      .where(and(eq(s.catatanTinjauan.peraturanId, p!.id), eq(s.catatanTinjauan.jenis, "sisip-bab")));
+    expect(tinjauan.map((t) => t.pesan)).toEqual([expect.stringMatching(/^Lampiran, Pasal 2 angka 2: /)]);
   });
 });
 

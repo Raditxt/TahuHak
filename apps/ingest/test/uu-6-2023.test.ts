@@ -77,7 +77,7 @@ describe("ingest UU 6/2023", () => {
   });
 
   it("menandai Ayat yang tidak urut karena salah baca OCR (\"(2t\", \"14)\") sebagai perlu tinjauan", async () => {
-    const t = await db.select().from(schema.catatanTinjauan);
+    const t = await db.select().from(schema.catatanTinjauan).where(eq(schema.catatanTinjauan.jenis, "ayat-tidak-urut"));
     expect(t.map((x) => [x.jenis, x.pesan])).toEqual([
       ["ayat-tidak-urut", "Lampiran, Pasal 133: Ayat (3) muncul, diharapkan (2)"],
       ["ayat-tidak-urut", "Lampiran, Pasal 138: Ayat (5) muncul, diharapkan (4)"],
@@ -93,6 +93,13 @@ describe("Parser Perubahan tanpa UU 13/2003 di database", () => {
     expect(ringkasan.perubahanDilewati).toContainEqual(expect.stringMatching(/^Lampiran, Pasal 81: UU 13\/2003 belum diingest/));
     expect(await db.$count(schema.catatanPerubahan)).toBe(0);
     expect(await db.$count(schema.relasiPeraturan)).toBe(0);
+  });
+
+  it("sisip BAB sekaligus Pasal di Peraturan yang belum diingest tetap masuk antrean tinjauan manual", async () => {
+    // Pasal 48 angka 29 hanya tercapai bila angka 14 yang menempel dan terbaca "t4." dikenali;
+    // Pasal 50 hanya bila tahun sasaran "2OLl" terbaca 2011.
+    const t = await db.select().from(schema.catatanTinjauan).where(eq(schema.catatanTinjauan.jenis, "sisip-bab"));
+    expect(t.map((x) => x.pesan.match(/^Lampiran, Pasal \d+ angka \d+/)?.[0])).toEqual(["Lampiran, Pasal 48 angka 29", "Lampiran, Pasal 50 angka 13"]);
   });
 });
 

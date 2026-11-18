@@ -26,7 +26,7 @@ function daftarAyat(s: string): string[] {
 
 /** Kenali pola kalimat pembuka angka perubahan (mis. "47. Ketentuan Pasal 156 diubah sehingga berbunyi sebagai berikut:"). */
 export function kenaliPola(kalimatMentah: string): Pola[] | null {
-  const k = normalNomor(kalimatMentah.replace(/^[0-9LlIO|]{1,3}\s*\.?\s+(?=[A-Z])/, "")); // buang nomor angka di depan (toleran OCR)
+  const k = normalNomor(kalimatMentah.replace(/^[0-9LlItO|]{1,3}\s*\.?\s+(?=[A-Z])/, "")); // buang nomor angka di depan (toleran OCR)
   let m: RegExpMatchArray | null;
 
   // "Pasal 43 dihapus." / "Pasal 161 dan Pasal 162 dihapus."
@@ -77,9 +77,22 @@ export function kenaliPola(kalimatMentah: string): Pola[] | null {
 
 /** Apakah baris ini pembuka angka perubahan bernomor `harap`? Toleran OCR ("L7.", "2 Ketentuan", "31 . Di"). */
 export function nomorAngka(baris: string, harap: number): boolean {
-  const m = baris.match(/^([0-9LlIO|]{1,3})\s*\.?\s+(Ketentuan|Di ?antara|Pasal|Judul|Penjelasan|BAB|Bab|Paragraf|Bagian|Lampiran)\b/);
-  if (!m) return false;
-  return Number(m[1]!.replace(/[LlI|]/g, "1").replace(/O/g, "0")) === harap;
+  return bacaNomorAngka(baris) === harap;
+}
+
+function bacaNomorAngka(baris: string): number | null {
+  const m = baris.match(/^([0-9LlItO|]{1,3})\s*\.?\s+(Ketentuan|Di ?antara|Pasal|Judul|Penjelasan|BAB|Bab|Paragraf|Bagian|Lampiran)\b/);
+  return m ? Number(m[1]!.replace(/[LlIt|]/g, "1").replace(/O/g, "0")) : null;
+}
+
+/**
+ * Nomor angka perubahan yang loncat melewati `harap` (angka sebelumnya hilang atau rusak OCR), atau null.
+ * Harus diikuti kata kerja perubahan di baris yang sama, dan nomornya lebih besar dari `harap`:
+ * butir daftar di dalam Pasal kutipan ("1. menganiaya ...") tidak ikut terhitung.
+ */
+function nomorLoncat(baris: string, harap: number): number | null {
+  const n = bacaNomorAngka(baris);
+  return n !== null && n > harap && /di:?uba|disisipkan|dihapus|ditambah/.test(baris) ? n : null;
 }
 
 export type HasilNormalIsi = { baris: string[]; ragu: string[] };
@@ -190,13 +203,13 @@ const JENIS_PERATURAN: Record<string, string> = {
   "Peraturan Pemerintah Pengganti Undang-Undang": "Perppu",
   "Peraturan Pemerintah": "PP",
 };
-const angkaOcr = (x: string) => x.replace(/O/g, "0").replace(/[lI]/g, "1").replace(/T/g, "7").replace(/S/g, "5");
+const angkaOcr = (x: string) => x.replace(/O/g, "0").replace(/[lIL]/g, "1").replace(/T/g, "7").replace(/S/g, "5");
 
 /** Peraturan yang diubah, dari kalimat pembuka Pasal pengubah ("Beberapa ketentuan dalam Undang-Undang Nomor 13 Tahun 2003 ... diubah sebagai berikut:"). */
 export function bacaSasaran(pembuka: string): Sasaran | null {
   const p = pembuka.replace(/Undang-\s+Undang/g, "Undang-Undang");
   if (!/(ketentuan|pengaturan baru)\b/i.test(p) || !/diubah|mengubah/.test(p) || !/berikut\s*:?\s*$/.test(p)) return null;
-  const m = p.match(/(Undang-Undang|Peraturan Pemerintah Pengganti Undang-Undang|Peraturan Pemerintah) Nomor ([0-9OlI]+) Tahun ([0-9OlITS]{4})/);
+  const m = p.match(/(Undang-Undang|Peraturan Pemerintah Pengganti Undang-Undang|Peraturan Pemerintah) Nomor ([0-9OlIL]+) Tahun ([0-9OlILTS]{4})/);
   if (!m) return null;
   return { jenis: JENIS_PERATURAN[m[1]!]!, nomor: angkaOcr(m[2]!), tahun: Number(angkaOcr(m[3]!)) };
 }
@@ -251,21 +264,26 @@ export function uraiPengubah(isi: BarisHal[], rujukanPasal: string): HasilUrai {
     if (/berikut\s*:?\s*$/.test(isi[i - 1]!.teks)) break;
   }
   const sasaran = bacaSasaran(pembuka.join(" "));
-  const angka: { nomor: number; baris: BarisHal[] }[] = [];
+  // `diharapkan`: angka ini loncat dari nomor yang diharapkan; masuk tinjauan manual, tidak diterapkan.
+  const angka: { nomor: number; baris: BarisHal[]; diharapkan?: number }[] = [];
   // OCR kadang menelan pergantian baris: "... kebendaan. 37 Pasal 96 dihapus. 38 Pasal 97 dihapus."
   // Hanya dipecah di nomor angka yang diharapkan berikutnya, sesudah akhir kalimat, dan diikuti kata kerja perubahan.
+  // Nomornya boleh rusak OCR ("t4." = 14), karena hanya nomor yang diharapkan berikutnya yang dicocokkan.
+  const nomorOcr = (n: number) => [...String(n)].map((d) => (d === "1" ? "[1lLIt|]" : d === "0" ? "[0O]" : d)).join("");
   const tempel = (teks: string, n: number) =>
-    teks.match(new RegExp(String.raw`^(.*?[.;:])\s+(${n}\s*\.?\s+(?:Ketentuan|Di ?antara|Pasal \S+ dihapus)[\s\S]*)$`));
+    teks.match(new RegExp(String.raw`^(.*?[.;:])\s+(${nomorOcr(n)}\s*\.?\s+(?:Ketentuan|Di ?antara|Pasal \S+ dihapus)[\s\S]*)$`));
   const antre = isi.slice(i);
   while (antre.length) {
     let b = antre.shift()!;
-    const baru = nomorAngka(b.teks, angka.length + 1);
-    const t = angka.length || baru ? tempel(b.teks, angka.length + (baru ? 2 : 1)) : null;
+    const harap = (angka.at(-1)?.nomor ?? 0) + 1;
+    const loncat = nomorAngka(b.teks, harap) ? null : nomorLoncat(b.teks, harap);
+    const nomor = loncat ?? (nomorAngka(b.teks, harap) ? harap : null);
+    const t = angka.length || nomor ? tempel(b.teks, nomor ? nomor + 1 : harap) : null;
     if (t) {
       antre.unshift({ teks: t[2]!, halaman: b.halaman });
       b = { teks: t[1]!, halaman: b.halaman };
     }
-    if (baru) angka.push({ nomor: angka.length + 1, baris: [b] });
+    if (nomor) angka.push({ nomor, baris: [b], ...(loncat ? { diharapkan: harap } : {}) });
     else angka.at(-1)?.baris.push(b);
   }
 
@@ -277,6 +295,10 @@ export function uraiPengubah(isi: BarisHal[], rujukanPasal: string): HasilUrai {
     let kalimat = a.baris[0]!.teks;
     while (!AKHIR_PEMBUKA.test(kalimat) && k < Math.min(a.baris.length, 3)) kalimat += " " + a.baris[k++]!.teks;
     const isiAngka = a.baris.slice(k).map((b) => b.teks);
+    if (a.diharapkan) {
+      tinjauan.push({ jenis: "angka-tidak-urut", pesan: `${rujukan}: nomor angka loncat, diharapkan angka ${a.diharapkan}: ${kalimat}` });
+      continue;
+    }
     const pola = kenaliPola(kalimat);
     if (!pola) {
       const jenis: JenisTinjauanPerubahan = /\bPenjelasan\b/.test(kalimat)
