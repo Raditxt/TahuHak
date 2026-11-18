@@ -1,4 +1,4 @@
-// Tes pengenal pola Parser Perubahan (#7), diangkat utuh dari prototype #2 (amend.test.ts). Satu-satunya tes di bawah Seam A yang memanggil fungsi parser langsung.
+// Tes pengenal pola Parser Perubahan (#7): kenaliPola dan nomorAngka diangkat utuh dari prototype #2 (amend.test.ts), ditambah tes normalIsi (koreksi OCR isi Pasal kutipan). Satu-satunya tes di bawah Seam A yang memanggil fungsi parser langsung.
 import { expect, test } from "vitest";
 import { kenaliPola, nomorAngka, normalIsi } from "../src/perubahan.ts";
 
