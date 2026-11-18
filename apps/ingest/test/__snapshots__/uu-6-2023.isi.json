@@ -5551,6 +5551,16 @@
       "jenis": "ayat-tidak-urut",
       "versi": "Lampiran, Pasal 138",
       "pesan": "Lampiran, Pasal 138: Ayat (5) muncul, diharapkan (4)"
+    },
+    {
+      "jenis": "sisip-bab",
+      "versi": "Lampiran, Pasal 48",
+      "pesan": "Lampiran, Pasal 48 angka 29: 29. Di antara BAB VII dan BAB VIII disisipkan 2 (dua) bab dan 2 (dua) pasal, yakni BAB VIIA dan BAB VIIB serta Pasal 52A dan Pasal 52B sehingga berbunyi sebagai berikut:"
+    },
+    {
+      "jenis": "sisip-bab",
+      "versi": "Lampiran, Pasal 50",
+      "pesan": "Lampiran, Pasal 50 angka 13: 13. Di antara BAB IX dan BAB X disisipkan 1 (satu) bab, yakni BAB IXA dan di antara Pasal 117 dan Pasal 118 disisipkan 2 (dua) pasal, yakni Pasal llTA dan Pasal LITB sehingga berbunyi sebagai berikut:"
     }
   ]
 }

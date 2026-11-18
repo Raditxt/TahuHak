@@ -6,7 +6,22 @@ import { bacaJudul, normalNomor } from "./nomor-ocr.ts";
 
 export type Bagian = "batang" | "lampiran";
 export type AyatHasil = { nomor: string | null; teks: string };
-export type PasalHasil = { bagian: Bagian; nomor: string; halaman: number[]; ayat: AyatHasil[]; penjelasan?: string };
+/** Satu baris teks hasil penyambungan beserta halaman yang dilaluinya. */
+export type BarisHal = {
+  teks: string;
+  halaman: number[];
+  /** Posisi karakter di `teks` tempat tiap halaman mulai (sejajar dengan `halaman`), untuk memotong baris yang melewati pergantian halaman. */
+  mulai?: number[];
+};
+export type PasalHasil = {
+  bagian: Bagian;
+  nomor: string;
+  halaman: number[];
+  ayat: AyatHasil[];
+  penjelasan?: string;
+  /** Hanya untuk Pasal pengubah: isinya per baris (angka perubahan, judul dan Ayat kutipan di baris baru), untuk Parser Perubahan. */
+  isiPengubah?: BarisHal[];
+};
 export type JenisTinjauan = "pasal-loncat" | "ayat-tidak-urut" | "penjelasan-tak-tertaut" | "penjelasan-tidak-ditemukan" | "judul-pasal-ditebak";
 export type Tinjauan = { jenis: JenisTinjauan; bagian?: Bagian; pasal?: string; pesan: string };
 export type HasilStruktur = { pasal: PasalHasil[]; tinjauan: Tinjauan[] };
@@ -55,7 +70,7 @@ function bagiZona(baris: Baris[]): Zona {
   return zona;
 }
 
-type PasalMentah = { nomor: string; halaman: number[]; baris: string[]; pengubah: boolean };
+type PasalMentah = { nomor: string; halaman: number[]; baris: string[]; hal: number[]; pengubah: boolean };
 
 /**
  * Pasal pengubah: kalimat pembukanya (sampai "berikut:") menyebut ketentuan dalam Undang-Undang/Peraturan lain yang diubah.
@@ -108,6 +123,7 @@ function potongPasal(baris: Baris[], bagian: Bagian, tinjauan: Tinjauan[]): Pasa
           // Kutipan sudah terpakai; judul bernomor sama sesudahnya bisa Pasal milik Lampiran sendiri.
           if (n) disebut.delete(n);
           cur.baris.push(t);
+          cur.hal.push(hal);
           if (!cur.halaman.includes(hal)) cur.halaman.push(hal);
           continue;
         }
@@ -118,7 +134,7 @@ function potongPasal(baris: Baris[], bagian: Bagian, tinjauan: Tinjauan[]): Pasa
       }
       if (rel !== "tolak") {
         if (rel === "loncat") tinjauan.push({ jenis: "pasal-loncat", bagian, pasal: n!, pesan: `${awalan(bagian)}Nomor Pasal loncat dari ${prev ?? "awal"} ke ${n} (hal ${hal})` });
-        cur = { nomor: n!, halaman: [hal], baris: [], pengubah: bagian === "lampiran" && isPengubah(baris, i + 1) };
+        cur = { nomor: n!, halaman: [hal], baris: [], hal: [], pengubah: bagian === "lampiran" && isPengubah(baris, i + 1) };
         pasal.push(cur);
         tutup = false;
         disebut = new Set();
@@ -136,6 +152,7 @@ function potongPasal(baris: Baris[], bagian: Bagian, tinjauan: Tinjauan[]): Pasa
       continue;
     }
     cur.baris.push(t);
+    cur.hal.push(hal);
     if (!cur.halaman.includes(hal)) cur.halaman.push(hal);
   }
   return pasal;
@@ -148,15 +165,28 @@ const BUTIR = /^([a-z]|\d{1,2})\.\s/;
  * pemenggalan kata di akhir baris disatukan.
  */
 export function sambungBaris(lines: string[], pisah?: RegExp): string {
-  let out = "";
-  for (const l of lines) {
-    if (!out) out = l;
-    else if (BUTIR.test(l) || (pisah?.test(l) && !/\bayat$/.test(out))) out += "\n" + l;
-    else if (/\p{Ll}-$/u.test(out) && /^\p{Ll}/u.test(l)) {
+  return sambungBarisHal(lines, [], pisah).map((b) => b.teks).join("\n");
+}
+
+/** Seperti `sambungBaris`, tetapi tiap baris hasil membawa halaman baris-baris asalnya (`hal` sejajar dengan `lines`). */
+export function sambungBarisHal(lines: string[], hal: number[], pisah?: RegExp): BarisHal[] {
+  const out: BarisHal[] = [];
+  for (const [i, l] of lines.entries()) {
+    const h = hal[i];
+    const cur = out.at(-1);
+    if (!cur || BUTIR.test(l) || (pisah?.test(l) && !/\bayat$/.test(cur.teks))) {
+      out.push({ teks: l, halaman: h === undefined ? [] : [h], mulai: h === undefined ? [] : [0] });
+      continue;
+    }
+    if (h !== undefined && !cur.halaman.includes(h)) {
+      cur.halaman.push(h);
+      cur.mulai?.push(cur.teks.length + 1);
+    }
+    if (/\p{Ll}-$/u.test(cur.teks) && /^\p{Ll}/u.test(l)) {
       // "mem-" + "buat" → "membuat"; kata ulang "terputus-" + "putus" tetap berstrip.
-      const depan = out.match(/(\p{L}+)-$/u)![1]!;
-      out = l.startsWith(depan) ? out + l : out.slice(0, -1) + l;
-    } else out += " " + l;
+      const depan = cur.teks.match(/(\p{L}+)-$/u)![1]!;
+      cur.teks = l.startsWith(depan) ? cur.teks + l : cur.teks.slice(0, -1) + l;
+    } else cur.teks += " " + l;
   }
   return out;
 }
@@ -176,11 +206,13 @@ const BARIS_BARU_PENGUBAH = new RegExp(
     .replace(/^/, "^(?:") + ")",
 );
 
+const isiPengubah = (p: PasalMentah) => sambungBarisHal(p.baris, p.hal, BARIS_BARU_PENGUBAH);
+
 const JUDUL_AYAT = /^\((\d+)\)\s*(.*)$/;
 
 function pecahAyat(p: PasalMentah, bagian: Bagian, tinjauan: Tinjauan[]): AyatHasil[] {
   // Pasal pengubah disimpan utuh sebagai satu Ayat tanpa nomor; isinya (angka perubahan) diurai Parser Perubahan.
-  if (p.pengubah) return [{ nomor: null, teks: sambungBaris(p.baris, BARIS_BARU_PENGUBAH) }];
+  if (p.pengubah) return [{ nomor: null, teks: isiPengubah(p).map((b) => b.teks).join("\n") }];
   const ayat: { nomor: string | null; lines: string[] }[] = [];
   let harap = 1;
   for (const l of p.baris) {
@@ -249,6 +281,7 @@ export function parseStruktur(baris: Baris[]): HasilStruktur {
     nomor: p.nomor,
     halaman: p.halaman,
     ayat: pecahAyat(p, "lampiran", tinjauan),
+    ...(p.pengubah ? { isiPengubah: isiPengubah(p) } : {}),
   }));
   if (penjelasan) {
     const ada = new Set(batang.map((p) => p.nomor));

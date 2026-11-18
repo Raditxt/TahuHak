@@ -37,8 +37,8 @@ Slice pertama yang sedang dikerjakan adalah Topik **"Di-PHK, pesangon berapa?"**
 | Riset, keputusan produk, glosarium, ADR | ✅ Selesai |
 | Ingestion UU 13/2003 (Ketenagakerjaan) | ✅ Selesai |
 | Ingestion UU 6/2023 (Cipta Kerja) dan PP 35/2021 | ✅ Selesai |
-| Parser perubahan (UU 6/2023 → pasal UU 13/2003) | 🔨 Berikutnya |
-| Penentu status pasal, Putusan MK | ⏳ Belum |
+| Parser perubahan (UU 6/2023 → pasal UU 13/2003) | ✅ Selesai |
+| Penentu status pasal, Putusan MK | 🔨 Berikutnya |
 | Pencarian dan perakit jawaban | ⏳ Belum |
 | Halaman web (Pasal, Topik, beranda) | ⏳ Belum |
 | Deploy | ⏳ Belum |

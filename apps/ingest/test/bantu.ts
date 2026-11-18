@@ -3,6 +3,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { sql } from "drizzle-orm";
+import { PDFDocument, StandardFonts, setTextRenderingMode, TextRenderingMode } from "pdf-lib";
 import { migrasi, sambung, type Db } from "@tahuhak/db";
 import type { SumberMeta } from "../src/ingest.ts";
 
@@ -51,3 +52,15 @@ export async function dbTes(): Promise<{ db: Db; tutup: () => Promise<void> }> {
 }
 
 export const DIR_DATA_TES = `${AKAR}.cache/data-tes`;
+
+/** PDF kecil buatan tes, satu larik baris per halaman. `scan`: teks digambar tak terlihat (render mode 3), seperti lapisan OCR di atas gambar hasil scan. */
+export async function buatPdf(halaman: string[][], scan = false): Promise<Uint8Array> {
+  const doc = await PDFDocument.create();
+  const font = await doc.embedFont(StandardFonts.Helvetica);
+  for (const baris of halaman) {
+    const page = doc.addPage([595, 842]);
+    if (scan) page.pushOperators(setTextRenderingMode(TextRenderingMode.Invisible));
+    baris.forEach((t, i) => page.drawText(t, { x: 72, y: 780 - i * 18, size: 11, font }));
+  }
+  return doc.save();
+}

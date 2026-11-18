@@ -55,6 +55,21 @@ Keterangan pada sebuah Pasal yang menunjukkan Ayat mana yang diubah, oleh Peratu
 **Peraturan Pengubah**:
 Peraturan yang mengubah, menghapus, atau menyisipkan Pasal di Peraturan lain.
 
+**Peraturan sasaran**:
+Peraturan yang isinya diubah, dihapus, atau disisipi oleh sebuah Peraturan Pengubah (mis. UU 13/2003 bagi UU 6/2023).
+_Avoid_: peraturan induk, peraturan lama
+
+**Pasal Pengubah**:
+Pasal di Peraturan Pengubah yang memuat perubahan atas satu Peraturan sasaran, dibuka dengan kalimat yang menyebut Peraturan itu (mis. Pasal 81 Lampiran UU 6/2023 untuk UU 13/2003).
+_Avoid_: pasal perubahan, pasal omnibus
+
+**angka perubahan**:
+Satu butir bernomor urut di dalam Pasal Pengubah yang menyatakan satu tindakan (ubah, sisip, atau hapus) atas Pasal atau Ayat Peraturan sasaran, diikuti bunyi barunya bila ada (mis. "47. Ketentuan Pasal 156 diubah …"). Berbeda dari butir bernomor di dalam bunyi Pasal yang dikutip.
+_Avoid_: butir perubahan, poin
+
+**Relasi Peraturan**:
+Hubungan tercatat antara dua Peraturan, mis. Peraturan Pengubah **mengubah** Peraturan sasaran.
+
 **Dasar Status**:
 Bukti yang menjadi landasan sebuah Status, beserta tanggalnya. Urutan kekuatannya: teks Peraturan atau Putusan MK (terkuat), lalu metadata relasi di sumber, lalu label status di sumber (terlemah). Status yang hanya didasarkan pada label sumber disebut belum diverifikasi.
 _Avoid_: sumber status
